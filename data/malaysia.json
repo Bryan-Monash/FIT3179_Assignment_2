@@ -1,0 +1,137 @@
+{
+    "41336": {
+        "id": 41336,
+        "name": "Johor",
+        "gdp": 116679,
+        "gdp_per_capita": 31952,
+        "population": 3553600,
+        "total_area_km2": 19210,
+        "region": "Peninsular Malaysia"
+    },
+    "41325": {
+        "id": 41325,
+        "name": "Kedah",
+        "gdp": 40596,
+        "gdp_per_capita": 19152,
+        "population": 2071900,
+        "total_area_km2": 9500,
+        "region": "Peninsular Malaysia"
+    },
+    "41367": {
+        "id": 41367,
+        "name": "Kelantan",
+        "gdp": 23020,
+        "gdp_per_capita": 12812,
+        "population": 1718200,
+        "total_area_km2": 15099,
+        "region": "Peninsular Malaysia"
+    },
+    "41401": {
+        "id": 41401,
+        "name": "Kuala Lumpur",
+        "gdp": 190075,
+        "gdp_per_capita": 101420,
+        "population": 176800,
+        "total_area_km2": 243,
+        "region": "Peninsular Malaysia"
+    },
+    "41415": {
+        "id": 41415,
+        "name": "Labuan",
+        "gdp": 5984,
+        "gdp_per_capita": 61833,
+        "population": 96800,
+        "total_area_km2": 91,
+        "region": "East Malaysia"
+    },
+    "41324": {
+        "id": 41324,
+        "name": "Malacca",
+        "gdp": 37274,
+        "gdp_per_capita": 41363,
+        "population": 872900,
+        "total_area_km2": 1664,
+        "region": "Peninsular Malaysia"
+    },
+    "41332": {
+        "id": 41332,
+        "name": "Negeri Sembilan",
+        "gdp": 42389,
+        "gdp_per_capita": 38559,
+        "population": 1098400,
+        "total_area_km2": 6686,
+        "region": "Peninsular Malaysia"
+    },
+    "41335": {
+        "id": 41335,
+        "name": "Pahang",
+        "gdp": 52452,
+        "gdp_per_capita": 32244,
+        "population": 1623200,
+        "total_area_km2": 36137,
+        "region": "Peninsular Malaysia"
+    },
+    "41327": {
+        "id": 41327,
+        "name": "Penang",
+        "gdp": 81284,
+        "gdp_per_capita": 47322,
+        "population": 1663000,
+        "total_area_km2": 1048,
+        "region": "Peninsular Malaysia"
+    },
+    "41330": {
+        "id": 41330,
+        "name": "Perak",
+        "gdp": 67629,
+        "gdp_per_capita": 27268,
+        "population": 2477700,
+        "total_area_km2": 21035,
+        "region": "Peninsular Malaysia"
+    },
+    "41380": {
+        "id": 41380,
+        "name": "Perlis",
+        "gdp": 5642,
+        "gdp_per_capita": 22479,
+        "population": 24600,
+        "total_area_km2": 821,
+        "region": "Peninsular Malaysia"
+    },
+    "41345": {
+        "id": 41345,
+        "name": "Sabah",
+        "gdp": 80167,
+        "gdp_per_capita": 21081,
+        "population": 3543500,
+        "total_area_km2": 73631,
+        "region": "East Malaysia"
+    },
+    "41342": {
+        "id": 41342,
+        "name": "Sarawak",
+        "gdp": 121414,
+        "gdp_per_capita": 44333,
+        "population": 2636000,
+        "total_area_km2": 124450,
+        "region": "East Malaysia"
+    },
+    "41326": {
+        "id": 41326,
+        "name": "Selangor",
+        "gdp": 280698,
+        "gdp_per_capita": 44616,
+        "population": 5874100,
+        "total_area_km2": 8104,
+        "region": "Peninsular Malaysia"
+    },
+    "41361": {
+        "id": 41361,
+        "name": "Terengganu",
+        "gdp": 32270,
+        "gdp_per_capita": 27268,
+        "population": 1153500,
+        "total_area_km2": 13035,
+        "region": "Peninsular Malaysia"
+    }
+}

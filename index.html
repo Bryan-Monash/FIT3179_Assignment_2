@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malaysia Population Density</title>
+
+  <!-- Vega & Vega-Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css" media="all">
+</head>
+<body>
+  <h1>Malaysia Population Density</h1>
+
+  <div id="Msia_vis" style="width: 100vw; height: 100vh;"></div>
+  <div id="Selangor_vis" style="width: 100vw; height: 100vh;"></div>
+
+  <script>
+    const msia_spec = "js/malaysia_population.vg.json";
+    const selangor_spec = "js/selangor_population.vg.json";
+    vegaEmbed("#Msia_vis", msia_spec).then(function(result) {}).catch(console.error);
+    vegaEmbed("#Selangor_vis", selangor_spec).then(function(result) {}).catch(console.error);
+  </script>
+</body>
+</html>

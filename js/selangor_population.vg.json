@@ -1,0 +1,221 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": "container",
+    "params": [
+        {
+            "name": "Selected_year",
+            "value": 2024,
+            "bind": {
+                "input": "select",
+                "options": [2020, 2021, 2022, 2023, 2024],
+                "name": "Year"
+            }
+        }
+    ],
+    "projection": {"type": "mercator"},
+    "layer": [
+        {
+            "data": {
+                "url": "map_data/geoBoundaries-MYS-ADM2.topojson",
+                "format": {"type": "topojson", "feature": "MYSADM2gbOpen"}
+            },
+            "transform": [
+                {
+                    "filter": "datum.properties.shapeName == 'Kuala Lumpur' || datum.properties.shapeName == 'Gombak' || datum.properties.shapeName == 'Ulu Langat' || datum.properties.shapeName == 'Sepang' || datum.properties.shapeName == 'Klang' || datum.properties.shapeName == 'Petaling' || datum.properties.shapeName == 'Ulu Selangor' || datum.properties.shapeName == 'Sabak Bernam' || datum.properties.shapeName == 'Kuala Selangor' || datum.properties.shapeName == 'Kuala Langat'"
+                },
+                {
+                    "lookup": "properties.shapeName",
+                    "from": {
+                        "data": {"url": "data/population_district_filtered.csv"},
+                        "key": "district",
+                        "fields": [
+                            "population_2020",
+                            "population_2021",
+                            "population_2022",
+                            "population_2023",
+                            "population_2024"
+                        ]
+                    }
+                },
+                {"calculate": "Selected_year", "as": "year"},
+                {"calculate": "datum['population_' + Selected_year]", "as": "population"}
+            ],
+            "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+            "encoding": {
+                "color": {
+                    "field": "population",
+                    "type": "quantitative",
+                    "scale": {"type": "linear", "scheme": "oranges"},
+                    "title": "Population (by thousands)"
+                },
+                "tooltip": [
+                    {"field": "properties.shapeName", "title": "District"},
+                    {"field": "year", "title": "Year"},
+                    {"field": "population", "title": "Population"}
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+                "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+            },
+            "transform": [
+                {"filter": "datum.properties.shapeName == 'Putrajaya'"},
+                {
+                    "lookup": "properties.shapeName",
+                    "from": {
+                        "data": {"url": "data/population_district_filtered.csv"},
+                        "key": "district",
+                        "fields": [
+                            "population_2020",
+                            "population_2021",
+                            "population_2022",
+                            "population_2023",
+                            "population_2024"
+                        ]
+                    }
+                },
+                {"calculate": "Selected_year", "as": "year"},
+                {"calculate": "datum['population_' + Selected_year]", "as": "population"}
+            ],
+            "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+            "encoding": {
+                "color": {
+                    "field": "population",
+                    "type": "quantitative",
+                    "scale": {"type": "linear", "scheme": "oranges"},
+                    "title": "Population (by thousands)"
+                },
+                "tooltip": [
+                    {"field": "properties.shapeName", "title": "District"},
+                    {"field": "year", "title": "Year"},
+                    {"field": "population", "title": "Population"}
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "map_data/stations_selangor.geojson",
+                "format": {"type": "json", "property": "features"}
+            },
+            "transform": [
+                {
+                    "filter": "datum.properties.ref != null && indexof(datum.properties.ref, 'SA') != 0"
+                },
+                {
+                    "calculate": "datum.properties.network != null && (test(/KTM/i, datum.properties.network) || test(/ETS/i, datum.properties.network) || test(/Komuter/i, datum.properties.network) || test(/Intercity/i, datum.properties.network) || test(/Utara/i, datum.properties.network)) ? 'KTM' : datum.properties.ref != null && indexof(datum.properties.ref, 'KJ') == 0 ? 'LRT Kelana Jaya Line' : datum.properties.ref != null && (indexof(datum.properties.ref, 'AG') == 0 || indexof(datum.properties.ref, 'SP') == 0) ? 'LRT Ampang/Sri Petaling Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'PY') == 0 ? 'MRT Putrajaya Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'KG') == 0 ? 'MRT Kajang Line' : datum.properties.monorail == 'yes' ? 'KL Monorail' : 'Other'",
+                    "as": "line"
+                }
+            ],
+            "mark": {"type": "circle", "size": 10, "opacity": 0.5},
+            "encoding": {
+                "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+                "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+                "stroke": {
+                    "field": "line",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "LRT Kelana Jaya Line",
+                            "LRT Ampang/Sri Petaling Line",
+                            "MRT Putrajaya Line",
+                            "MRT Kajang Line",
+                            "KTM",
+                            "KL Monorail",
+                            "Other"
+                        ],
+                        "range": [
+                            "#1f78b4",
+                            "#33a02c",
+                            "#6a3d9a",
+                            "#00bfc4",
+                            "#b2df8a",
+                            "#636363",
+                            "#cab2d6"
+                        ]
+                    },
+                    "legend": {"title": "Station Lines"}
+                },
+                "tooltip": [
+                    {"field": "properties.name", "title": "Station"},
+                    {"field": "properties.ref", "title": "Code"},
+                    {"field": "properties.railway", "title": "Type"},
+                    {"field": "properties.public_transport", "title": "PT Type"}
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "map_data/routes_selangor.geojson",
+                "format": {"type": "json", "property": "features"}
+            },
+            "transform": [
+                {
+                    "filter": "datum.properties['name'] != 'LRT 3' && datum.properties['name'] != 'ERL'"
+                },
+                {
+                    "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
+                    "as": "line_name"
+                },
+                {
+                    "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
+                    "as": "route_line"
+                },
+                {"flatten": ["geometry.coordinates"], "as": ["coord"]},
+                {"calculate": "datum.coord[0]", "as": "lon"},
+                {"calculate": "datum.coord[1]", "as": "lat"}
+            ],
+            "mark": {"type": "line", "strokeWidth": 5, "opacity": 0.7},
+            "encoding": {
+                "longitude": {"field": "lon", "type": "quantitative"},
+                "latitude": {"field": "lat", "type": "quantitative"},
+                "stroke": {
+                    "field": "route_line",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": [
+                            "LRT Kelana Jaya Line",
+                            "LRT Ampang/Sri Petaling Line",
+                            "MRT Putrajaya Line",
+                            "MRT Kajang Line",
+                            "KTM",
+                            "KL Monorail",
+                            "Other Railway"
+                        ],
+                        "range": [
+                            "#1f78b4",
+                            "#33a02c",
+                            "#6a3d9a",
+                            "#00bfc4",
+                            "#b2df8a",
+                            "#636363",
+                            "#cab2d6"
+                        ]
+                    },
+                    "legend": {"title": "Railway Lines"}
+                },
+                "tooltip": [
+                    {"field": "line_name", "title": "Line Name"},
+                    {"field": "route_line", "title": "Line Type"},
+                    {"field": "properties.railway", "title": "Railway Type"}
+                ],
+                "detail": {"field": "properties.@id"}
+            }
+        }
+    ],
+    "resolve": {
+        "scale": {
+            "color": "shared",
+            "stroke": "independent"
+        }
+    },
+    "config": {
+    "legend": {
+        "titleFontSize": 24,
+        "labelFontSize": 20,
+        "gradientHorizontalMaxLength": 500
+    }
+  }
+}

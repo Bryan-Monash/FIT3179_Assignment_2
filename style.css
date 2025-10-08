@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
+#vis {
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.vg-tooltip {
+  font-size: 24px !important;
+}
