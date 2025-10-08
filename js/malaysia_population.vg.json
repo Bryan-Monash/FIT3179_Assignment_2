@@ -5,12 +5,10 @@
   "params": [
     {
       "name": "Selected_year",
-      "value": 2025,
+      "value": 2024,
       "bind": {
-        "input": "range",
-        "min": 2019,
-        "max": 2025,
-        "step": 1,
+        "input": "select",
+        "options": [2020, 2021, 2022, 2023, 2024],
         "name": "Year"
       }
     }
@@ -200,7 +198,7 @@
           "as": "line_name"
         },
         {
-          "calculate": "datum.line_name == 'ERL' || datum.line_name == 'KLIA Ekspres' || datum.line_name == 'KLIA Transit' ? 'KLIA Express/Transit' : test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/MRT.*Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/MRT.*Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
+          "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/MRT.*Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/MRT.*Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
           "as": "route_line"
         },
         {
@@ -216,7 +214,7 @@
           "as": "lat"
         }
       ],
-      "mark": {"type": "line", "strokeWidth": 2, "opacity": 0.7},
+      "mark": {"type": "line", "strokeWidth": 2, "opacity": 1.0},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
