@@ -42,33 +42,22 @@
     },
     {
       "data": {
-        "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
-        "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+        "url": "data/population_state_filtered.csv"
       },
       "transform": [
         {
-          "lookup": "properties.shapeName",
+          "filter": "datum.year == Selected_year"
+        },
+        {
+          "lookup": "state",
           "from": {
-            "data": {"url": "data/population_state_filtered.csv"},
-            "key": "state",
-            "fields": [
-              "population_density_2019",
-              "population_density_2020",
-              "population_density_2021",
-              "population_density_2022",
-              "population_density_2023",
-              "population_density_2024",
-              "population_density_2025"
-            ]
-          }
-        },
-        {
-          "calculate": "Selected_year",
-          "as": "year"
-        },
-        {
-          "calculate": "datum['population_density_' + toString(datum.year)]",
-          "as": "population_density"
+            "data": {
+              "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+              "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+            },
+            "key": "properties.shapeName"
+          },
+          "as": "geo"
         },
         {
           "calculate": "log(datum.population_density) + 0.1",
@@ -77,6 +66,7 @@
       ],
       "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
       "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
         "color": {
           "field": "log_population_density",
           "type": "quantitative",
@@ -91,9 +81,9 @@
           }
         },
         "tooltip": [
-          {"field": "properties.shapeName", "title": "State"},
-          {"field": "year", "title": "Year", "type": "nominal"},
-          {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f", "type": "quantitative"},
+          {"field": "state", "title": "State"},
+          {"field": "year", "title": "Year"},
+          {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"},
           {"field": "log_population_density", "title": "Log Density", "format": ".2f"}
         ]
       }
