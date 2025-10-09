@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "vconcat": [
+    {
+      "width": "container",
+      "height": 800,
+      "title": "Ridership by Route Line in Selangor with Population by District",
+      "projection": { "type": "mercator" },
+      "layer": [
+        {
+          "data": {
+            "url": "map_data/geoBoundaries-MYS-ADM2.topojson",
+            "format": {"type": "topojson", "feature": "MYSADM2gbOpen"}
+          },
+          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+          "encoding": {
+            "color": {"field": "population", "type": "quantitative", "scale": {"scheme": "blues"}},
+            "tooltip": [
+              {"field": "properties.shapeName","type":"nominal","title":"District"},
+              {"field":"population","type":"quantitative","title":"Population"},
+              {"field":"year","type":"ordinal","title":"Year"}
+            ]
+          },
+          "transform": [
+            {
+              "lookup": "properties.shapeName",
+              "from": {
+                "data": {"url": "data/population_district_filtered.csv"},
+                "key": "district",
+                "fields": ["population","year"]
+              }
+            },
+            {
+              "filter": {"param": "time_brush"} 
+            }
+          ]
+        },
+        {
+          "data": {
+            "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+            "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+          },
+          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1}
+        },
+        {
+          "data": {
+            "url": "map_data/routes_selangor.geojson",
+            "format": {"type": "json","property":"features"}
+          },
+          "mark": {"type": "line","strokeWidth": 5},
+          "encoding": {
+            "longitude": {"field":"geometry.coordinates[0]","type":"quantitative"},
+            "latitude": {"field":"geometry.coordinates[1]","type":"quantitative"},
+            "color": {"field":"route_line","type":"nominal","title":"Route Line"},
+            "tooltip":[
+              {"field":"route_line","title":"Route Line"},
+              {"field":"ridership","title":"Ridership","type":"quantitative","format":","}
+            ]
+          },
+          "transform": [
+            {
+              "lookup":"route_line",
+              "from":{
+                "data":{"url":"data/ridership_filtered.csv"},
+                "key":"route_line",
+                "fields":["ridership","date"]
+              }
+            },
+            {
+              "calculate":"datum.date.substring(0,4)","as":"year"
+            },
+            {
+              "filter": {"param": "time_brush"}
+            },
+            {
+              "flatten":["geometry.coordinates"], "as":["coord"]
+            },
+            {"calculate":"datum.coord[0]","as":"lon"},
+            {"calculate":"datum.coord[1]","as":"lat"}
+          ]
+        }
+      ]
+    }
+  ]
+}

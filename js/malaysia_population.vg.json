@@ -202,6 +202,28 @@
           "as": "route_line"
         },
         {
+          "lookup": "route_line",
+          "from": {
+            "data": {"url": "data/transport_yearly_sum.csv"},
+            "key": "route_line",
+            "fields": [
+              "ridership_2020",
+              "ridership_2021",
+              "ridership_2022",
+              "ridership_2023",
+              "ridership_2024"
+            ]
+          }
+        },
+        {
+          "calculate": "Selected_year",
+          "as": "year"
+        },
+        {
+          "calculate": "datum['ridership_' + toString(datum.year)]",
+          "as": "total_ridership"
+        },
+        {
           "flatten": ["geometry.coordinates"],
           "as": ["coord"]
         },
@@ -245,7 +267,8 @@
         "tooltip": [
           {"field": "line_name", "title": "Line Name"},
           {"field": "route_line", "title": "Line Type"},
-          {"field": "properties.railway", "title": "Railway Type"}
+          {"field": "total_ridership", "type": "quantitative", "title": "Total Ridership", "format": ","},
+          {"field": "year", "title": "Year", "type": "nominal"}
         ],
         "detail": {"field": "properties.@id"}
       }
