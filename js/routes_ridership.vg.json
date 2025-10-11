@@ -66,45 +66,85 @@
       }
     },
     {
-      "title": "",
-      "width": 1500,
-      "height": 100,
-      "data": {"url": "data/ridership_filtered.csv"},
-      "mark": "area",
-      "encoding": {
-        "x": {
-          "field": "date", 
-          "type": "temporal", 
-          "timeUnit": "yearmonth",
-          "title": "Month",
-          "scale": {"domain": {"param": "time_brush"}},
-          "axis": {"grid": false}
-        },
-        "y": {
-          "aggregate": "sum", 
-          "field": "ridership", 
-          "title": "Total Ridership"
-        },
-        "color": {
-          "field": "route", 
-          "type": "nominal",
-          "scale": {
-            "domain": {"expr": "railway_color_scale.domain"}, 
-            "range": [
-              "#1f78b4",
-              "#33a02c",
-              "#6a3d9a",
-              "#00bfc4",
-              "#b2df8a",
-              "#636363"
+      "hconcat": [
+        {
+          "title": "",
+          "width": 750,
+          "height": 100,
+          "data": {"url": "data/ridership_filtered.csv"},
+          "transform": [
+            {"filter": {"param": "time_brush"}}
+          ],
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "field": "route", 
+              "type": "nominal", 
+              "title": "Route",
+              "axis": {"grid": false}
+            },
+            "y": {
+              "aggregate": "sum", 
+              "field": "ridership", 
+              "title": "Total Ridership"
+            },
+            "color": {
+              "field": "route", 
+              "type": "nominal",
+              "scale": {
+                "domain": {"expr": "railway_color_scale.domain"}, 
+                "range": [
+                  "#1f78b4",
+                  "#33a02c",
+                  "#6a3d9a",
+                  "#00bfc4",
+                  "#b2df8a",
+                  "#636363"
+                ]
+              }
+            },
+            "tooltip": [
+              {"field": "route", "title": "Route"},
+              {"aggregate": "sum", "field": "ridership", "title": "Ridership"},
+              {"field": "date", "title": "Date", "timeUnit": "yearmonth", "type": "temporal"}
             ]
           }
         },
-        "tooltip": [
-          {"field": "route", "title": "Route"},
-          {"aggregate": "sum", "field": "ridership", "title": "Ridership"}
-        ]
-      }
+        {
+          "title": "Selangor Temperature Heatmap (°C)",
+          "width": 750,
+          "height": 100,
+          "data": {"url": "data/weather_selangor_cleaned.csv"},
+          "transform": [
+            {
+              "calculate": "toDate(datum.datetime)",
+              "as": "date"
+            },
+            {"filter": {"param": "time_brush"}}
+          ],
+          "mark": "rect",
+          "encoding": {
+            "x": {
+              "field": "date",
+              "type": "temporal",
+              "timeUnit": "yearmonth",
+              "title": "Month"
+            },
+            "y": {
+              "field": "city",
+              "type": "nominal",
+              "title": "City"
+            },
+            "color": {
+              "aggregate": "mean",
+              "field": "temperature",
+              "type": "quantitative",
+              "scale": {"scheme": "yelloworangebrown"},
+              "title": "Temperature (°C)"
+            }
+          }
+        }
+      ]
     }
   ],
   "config": {
