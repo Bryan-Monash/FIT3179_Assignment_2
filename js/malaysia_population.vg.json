@@ -1,7 +1,5 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "height": "container",
   "params": [
     {
       "name": "Selected_year",
@@ -13,261 +11,190 @@
       }
     }
   ],
-  "projection": {
-    "type": "mercator"
-  },
-  "layer": [
+  "vconcat": [
     {
-      "data": {
-        "url": "map_data/ne_10m_ocean.json",
-        "format": {"type": "topojson", "feature": "ne_10m_ocean"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#cce5ff",
-        "stroke": "none"
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/ne_10m_land.json",
-        "format": {"type": "topojson", "feature": "ne_10m_land"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "lightgray",
-        "stroke": "white",
-        "strokeWidth": 0.5  
-      }
-    },
-    {
-      "data": {
-        "url": "data/population_state_filtered.csv"
-      },
-      "transform": [
+      "title": "Malaysia Population Density by States",
+      "width": 1500,
+      "height": 450,
+      "projection": {"type": "mercator"},
+      "layer": [
         {
-          "filter": "datum.year == Selected_year"
-        },
-        {
-          "lookup": "state",
-          "from": {
-            "data": {
-              "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
-              "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
-            },
-            "key": "properties.shapeName"
+          "data": {
+            "url": "map_data/ne_10m_ocean.json",
+            "format": {"type": "topojson", "feature": "ne_10m_ocean"}
           },
-          "as": "geo"
-        },
-        {
-          "calculate": "log(datum.population_density) + 0.1",
-          "as": "log_population_density"
-        }
-      ],
-      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-      "encoding": {
-        "shape": {"field": "geo", "type": "geojson"},
-        "color": {
-          "field": "log_population_density",
-          "type": "quantitative",
-          "scale": {"type": "log", "scheme": "oranges"},
-          "title": "Population Density (log scale)",
-          "legend": {
-            "orient": "bottom",
-            "offset": 10,
-            "direction": "horizontal",
-            "titleLimit": 500,
-            "labelLimit": 500
+          "mark": {
+            "type": "geoshape",
+            "fill": "#cce5ff",
+            "stroke": "none"
           }
         },
-        "tooltip": [
-          {"field": "state", "title": "State"},
-          {"field": "year", "title": "Year"},
-          {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"},
-          {"field": "log_population_density", "title": "Log Density", "format": ".2f"}
-        ]
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/geoBoundaries-THA-ADM1.json",
-        "format": {"type": "topojson", "feature": "THAADM1gbOpen"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "lightgray",
-        "stroke": "white",
-        "strokeWidth": 0.5  
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/Singapore_ADM1.json",
-        "format": {"type": "topojson", "feature": "SGPADM1gbOpen"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "lightgray",
-        "stroke": "white",
-        "strokeWidth": 0.5  
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/ne_110m_graticules_1.json",
-        "format": {"type": "topojson", "feature": "ne_110m_graticules_1"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "none",
-        "stroke": "lightgray",
-        "strokeWidth": 0.5  
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/stations.geojson",
-        "format": {"type": "json", "property": "features"}
-      },
-      "transform": [
         {
-          "filter": "datum.properties.ref != null && indexof(datum.properties.ref, 'SA') != 0"
+          "data": {
+            "url": "map_data/ne_10m_land.json",
+            "format": {"type": "topojson", "feature": "ne_10m_land"}
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "lightgray",
+            "stroke": "white",
+            "strokeWidth": 0.5  
+          }
         },
         {
-          "calculate": "datum.properties.network != null && (test(/KTM/i, datum.properties.network) || test(/ETS/i, datum.properties.network) || test(/Komuter/i, datum.properties.network) || test(/Intercity/i, datum.properties.network) || test(/Utara/i, datum.properties.network)) ? 'KTM' : datum.properties.ref != null && indexof(datum.properties.ref, 'KJ') == 0 ? 'LRT Kelana Jaya Line' : datum.properties.ref != null && (indexof(datum.properties.ref, 'AG') == 0 || indexof(datum.properties.ref, 'SP') == 0) ? 'LRT Ampang/Sri Petaling Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'PY') == 0 ? 'MRT Putrajaya Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'KG') == 0 ? 'MRT Kajang Line' : datum.properties.monorail == 'yes' ? 'KL Monorail' : 'Other'",
-          "as": "line"
-        }
-      ],
-      "mark": {"type": "circle", "size": 10, "opacity": 0.5},
-      "encoding": {
-        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
-        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
-        "color": {
-          "field": "line",
-          "type": "nominal",
-          "scale": {
-            "domain": [
-              "LRT Kelana Jaya Line",
-              "LRT Ampang/Sri Petaling Line", 
-              "MRT Putrajaya Line",
-              "MRT Kajang Line",
-              "KTM",
-              "KL Monorail",
-              "Other"
+          "data": {
+            "url": "data/population_state_filtered.csv"
+          },
+          "transform": [
+            {
+              "filter": "datum.year == Selected_year"
+            },
+            {
+              "lookup": "state",
+              "from": {
+                "data": {
+                  "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+                  "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+                },
+                "key": "properties.shapeName"
+              },
+              "as": "geo"
+            },
+            {
+              "calculate": "log(datum.population_density) + 0.1",
+              "as": "log_population_density"
+            }
+          ],
+          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+          "encoding": {
+            "shape": {"field": "geo", "type": "geojson"},
+            "color": {
+              "field": "log_population_density",
+              "type": "quantitative",
+              "scale": {"type": "log", "scheme": "oranges"},
+              "title": "Population Density (log scale)",
+              "legend": {
+                "orient": "bottom",
+                "offset": 10,
+                "direction": "horizontal",
+                "titleLimit": 500,
+                "labelLimit": 500
+              }
+            },
+            "tooltip": [
+              {"field": "state", "title": "State"},
+              {"field": "year", "title": "Year"},
+              {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"},
+              {"field": "log_population_density", "title": "Log Density", "format": ".2f"}
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "map_data/geoBoundaries-THA-ADM1.json",
+            "format": {"type": "topojson", "feature": "THAADM1gbOpen"}
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "lightgray",
+            "stroke": "white",
+            "strokeWidth": 0.5  
+          }
+        },
+        {
+          "data": {
+            "url": "map_data/Singapore_ADM1.json",
+            "format": {"type": "topojson", "feature": "SGPADM1gbOpen"}
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "lightgray",
+            "stroke": "white",
+            "strokeWidth": 0.5  
+          }
+        },
+        {
+          "data": {
+            "url": "map_data/ne_110m_graticules_1.json",
+            "format": {"type": "topojson", "feature": "ne_110m_graticules_1"}
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "none",
+            "stroke": "lightgray",
+            "strokeWidth": 0.5  
+          }
+        },
+        {
+          "data": {
+            "url": "map_data/routes.geojson",
+            "format": {"type": "json", "property": "features"}
+          },
+          "transform": [
+            {
+              "filter": "datum.properties['name'] != 'LRT 3' && datum.properties['name'] != 'ERL'"
+            },
+            {
+              "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
+              "as": "line_name"
+            },
+            {
+              "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/MRT.*Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/MRT.*Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
+              "as": "route_line"
+            },
+            {
+              "flatten": ["geometry.coordinates"],
+              "as": ["coord"]
+            },
+            {
+              "calculate": "datum.coord[0]",
+              "as": "lon"
+            },
+            {
+              "calculate": "datum.coord[1]",
+              "as": "lat"
+            }
+          ],
+          "mark": {"type": "line", "strokeWidth": 2, "opacity": 1.0},
+          "encoding": {
+            "longitude": {"field": "lon", "type": "quantitative"},
+            "latitude": {"field": "lat", "type": "quantitative"},
+            "stroke": {
+              "field": "route_line",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Kelana Jaya Line",
+                  "Ampang Line",
+                  "Putrajaya Line",
+                  "Kajang Line",
+                  "KTM",
+                  "KL Monorail"
+                ],
+                "range": [
+                  "#1f78b4",
+                  "#33a02c",
+                  "#6a3d9a",
+                  "#00bfc4",
+                  "#b2df8a",
+                  "#636363"
+                ]
+              }
+            },
+            "tooltip": [
+              {"field": "line_name", "title": "Line Name"},
+              {"field": "route_line", "title": "Line Type"}
             ],
-            "range": [
-              "#1f78b4",
-              "#33a02c",
-              "#6a3d9a",
-              "#00bfc4",
-              "#b2df8a",
-              "#636363",
-              "#cab2d6"
-            ]
+            "detail": {"field": "properties.@id"}
           }
-        },
-        "tooltip": [
-          {"field": "properties.name", "title": "Station"},
-          {"field": "properties.ref", "title": "Code"},
-          {"field": "properties.railway", "title": "Type"},
-          {"field": "properties.public_transport", "title": "PT Type"}
-        ]
-      }
-    },
-    {
-      "data": {
-        "url": "map_data/routes.geojson",
-        "format": {"type": "json", "property": "features"}
-      },
-      "transform": [
-        {
-          "filter": "datum.properties['name'] != 'LRT 3' && datum.properties['name'] != 'ERL'"
-        },
-        {
-          "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
-          "as": "line_name"
-        },
-        {
-          "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/MRT.*Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/MRT.*Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
-          "as": "route_line"
-        },
-        {
-          "lookup": "route_line",
-          "from": {
-            "data": {"url": "data/transport_yearly_sum.csv"},
-            "key": "route_line",
-            "fields": [
-              "ridership_2020",
-              "ridership_2021",
-              "ridership_2022",
-              "ridership_2023",
-              "ridership_2024"
-            ]
-          }
-        },
-        {
-          "calculate": "Selected_year",
-          "as": "year"
-        },
-        {
-          "calculate": "datum['ridership_' + toString(datum.year)]",
-          "as": "total_ridership"
-        },
-        {
-          "flatten": ["geometry.coordinates"],
-          "as": ["coord"]
-        },
-        {
-          "calculate": "datum.coord[0]",
-          "as": "lon"
-        },
-        {
-          "calculate": "datum.coord[1]",
-          "as": "lat"
         }
-      ],
-      "mark": {"type": "line", "strokeWidth": 2, "opacity": 1.0},
-      "encoding": {
-        "longitude": {"field": "lon", "type": "quantitative"},
-        "latitude": {"field": "lat", "type": "quantitative"},
-        "stroke": {
-          "field": "route_line",
-          "type": "nominal",
-          "scale": {
-            "domain": [
-              "LRT Kelana Jaya Line",
-              "LRT Ampang/Sri Petaling Line",
-              "MRT Putrajaya Line",
-              "MRT Kajang Line",
-              "KTM",
-              "KL Monorail",
-              "Other Railway"
-            ],
-            "range": [
-              "#1f78b4",
-              "#33a02c",
-              "#6a3d9a",
-              "#00bfc4",
-              "#b2df8a",
-              "#636363",
-              "#cab2d6"
-            ]
-          }
-        },
-        "tooltip": [
-          {"field": "line_name", "title": "Line Name"},
-          {"field": "route_line", "title": "Line Type"},
-          {"field": "total_ridership", "type": "quantitative", "title": "Total Ridership", "format": ","},
-          {"field": "year", "title": "Year", "type": "nominal"}
-        ],
-        "detail": {"field": "properties.@id"}
-      }
+      ]
     }
   ],
   "config": {
     "legend": {
-        "titleFontSize": 24,
-        "labelFontSize": 20,
+        "titleFontSize": 16,
+        "labelFontSize": 14,
         "gradientHorizontalMaxLength": 500
     }
   }

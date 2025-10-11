@@ -16,13 +16,17 @@
 <body>
   <h1>Malaysia Population Density</h1>
 
-  <div id="Msia_vis" style="width: 100vw; height: 90vh;"></div>
-  <div id="ridership_vis" style="width: 100vw; height: 90vh;"></div>
+  <div id="Msia_vis" style="width: 100vw; height: 100vh;"></div>
+  <div id="Selangor_vis", style="width: 100vw; height: 100vh;"></div>
+  <div id="ridership_vis" style="width: 100vw; height: 100vh;"></div>
 
   <script>
     const msia_spec = "js/malaysia_population.vg.json";
+    const selangor_spec = "js/selangor_population.vg.json";
     const ridership_spec = "js/routes_ridership.vg.json";
+    
     vegaEmbed("#Msia_vis", msia_spec).then(function(result) {}).catch(console.error);
+    vegaEmbed("#Selangor_vis", selangor_spec).then(function(result) {}).catch(console.error);
     vegaEmbed("#ridership_vis", ridership_spec).then(function(result) {}).catch(console.error);
   </script>
 </body>

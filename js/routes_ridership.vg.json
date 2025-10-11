@@ -5,10 +5,10 @@
       "name": "railway_color_scale",
       "value": {
         "domain": [
-          "LRT Kelana Jaya Line",
-          "LRT Ampang/Sri Petaling Line",
-          "MRT Putrajaya Line",
-          "MRT Kajang Line",
+          "Kelana Jaya Line",
+          "Ampang Line",
+          "Putrajaya Line",
+          "Kajang Line",
           "KTM",
           "KL Monorail"
         ],
@@ -25,189 +25,8 @@
   ],
   "vconcat": [
     {
-      "title": "Malaysia Public Transport Ridership and Population Overview",
-      "width": "container",
-      "height": 450,
-      "projection": {"type": "mercator"},
-      "layer": [
-        {
-          "data": {"url": "data/population_district_filtered.csv"},
-          "transform": [
-            {
-              "filter": "datum.district == 'Kuala Lumpur' || datum.district == 'Gombak' || datum.district == 'Ulu Langat' || datum.district == 'Sepang' || datum.district == 'Klang' || datum.district == 'Petaling' || datum.district == 'Ulu Selangor' || datum.district == 'Sabak Bernam' || datum.district == 'Kuala Selangor' || datum.district == 'Kuala Langat'"
-            },
-            {
-              "lookup": "district",
-              "from": {
-                "data": {
-                  "url": "map_data/geoBoundaries-MYS-ADM2.topojson",
-                  "format": {"type": "topojson", "feature": "MYSADM2gbOpen"}
-                },
-                "key": "properties.shapeName"
-              },
-              "as": "geo"
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-          "encoding": {
-            "shape": {"field": "geo", "type": "geojson"},
-            "color": {
-              "field": "population",
-              "type": "quantitative",
-              "scale": {"type": "linear", "scheme": "oranges"},
-              "title": "Population (by thousands)"
-            },
-            "tooltip": [
-              {"field": "district", "title": "District"},
-              {"field": "year", "title": "Latest Year"},
-              {"field": "population", "title": "Population (by thousands)"}
-            ]
-          }
-        },
-        {
-          "data": {"url": "data/population_district_filtered.csv"},
-          "transform": [
-            {"filter": "datum.district == 'Putrajaya'"},
-            {
-              "lookup": "district",
-              "from": {
-                "data": {
-                  "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
-                  "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
-                },
-                "key": "properties.shapeName"
-              },
-              "as": "geo"
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-          "encoding": {
-            "shape": {"field": "geo", "type": "geojson"},
-            "color": {
-              "field": "population",
-              "type": "quantitative",
-              "scale": {"type": "linear", "scheme": "oranges"},
-              "title": "Population (by thousands)"
-            },
-            "tooltip": [
-              {"field": "district", "title": "District"},
-              {"field": "year", "title": "Latest Year"},
-              {"field": "population", "title": "Population (by thousands)"}
-            ]
-          }
-        },
-        {
-          "data": {
-              "url": "map_data/stations_selangor.geojson",
-              "format": {"type": "json", "property": "features"}
-          },
-          "transform": [
-              {
-                  "filter": "datum.properties.ref != null && indexof(datum.properties.ref, 'SA') != 0"
-              },
-              {
-                  "calculate": "datum.properties.network != null && (test(/KTM/i, datum.properties.network) || test(/ETS/i, datum.properties.network) || test(/Komuter/i, datum.properties.network) || test(/Intercity/i, datum.properties.network) || test(/Utara/i, datum.properties.network)) ? 'KTM' : datum.properties.ref != null && indexof(datum.properties.ref, 'KJ') == 0 ? 'LRT Kelana Jaya Line' : datum.properties.ref != null && (indexof(datum.properties.ref, 'AG') == 0 || indexof(datum.properties.ref, 'SP') == 0) ? 'LRT Ampang/Sri Petaling Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'PY') == 0 ? 'MRT Putrajaya Line' : datum.properties.ref != null && indexof(datum.properties.ref, 'KG') == 0 ? 'MRT Kajang Line' : datum.properties.monorail == 'yes' ? 'KL Monorail' : 'Other'",
-                  "as": "line"
-              }
-          ],
-          "mark": {"type": "circle", "size": 10, "opacity": 0.5},
-          "encoding": {
-            "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
-            "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
-            "stroke": {
-              "field": "line",
-              "type": "nominal",
-              "scale": {
-                "domain": [
-                  "LRT Kelana Jaya Line",
-                  "LRT Ampang/Sri Petaling Line",
-                  "MRT Putrajaya Line",
-                  "MRT Kajang Line",
-                  "KTM",
-                  "KL Monorail",
-                  "Other"
-                ],
-                "range": [
-                  "#1f78b4",
-                  "#33a02c",
-                  "#6a3d9a",
-                  "#00bfc4",
-                  "#b2df8a",
-                  "#636363",
-                  "#cab2d6"
-                ]
-                },
-                "legend": {"title": "Station Lines"}
-            },
-            "tooltip": [
-              {"field": "properties.name", "title": "Station"},
-              {"field": "properties.ref", "title": "Code"},
-              {"field": "properties.railway", "title": "Type"},
-              {"field": "properties.public_transport", "title": "PT Type"}
-            ]
-          }
-        },
-        {
-          "data": {
-            "url": "map_data/routes_selangor.geojson", 
-            "format": {"type": "json", "property": "features"}
-          },
-          "transform": [
-            {
-              "filter": "datum.properties['name'] != 'LRT 3' && datum.properties['name'] != 'ERL' && datum.properties['name'] != 'APM'"
-            },
-            {
-              "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
-              "as": "line_name"
-            },
-            {
-              "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
-              "as": "route_line"
-            },
-            {"flatten": ["geometry.coordinates"], "as": ["coord"]},
-            {"calculate": "datum.coord[0]", "as": "lon"},
-            {"calculate": "datum.coord[1]", "as": "lat"}
-          ],
-          "mark": {"type": "line", "strokeWidth": 5},
-          "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "stroke": {
-              "field": "route_line",
-              "type": "nominal",
-              "scale": {
-                "domain": [
-                  "LRT Kelana Jaya Line",
-                  "LRT Ampang/Sri Petaling Line",
-                  "MRT Putrajaya Line",
-                  "MRT Kajang Line",
-                  "KTM",
-                  "KL Monorail",
-                  "Other Railway"
-                ],
-                "range": [
-                  "#1f78b4",
-                  "#33a02c",
-                  "#6a3d9a",
-                  "#00bfc4",
-                  "#b2df8a",
-                  "#636363",
-                  "#cab2d6"
-                ]
-              },
-              "legend": {"title": "Railway Lines"}
-            },
-            "tooltip": [
-              {"field": "route_line", "title": "Route Line"}
-            ],
-            "detail": {"field": "properties.@id"}
-          }
-        }
-      ]
-    },
-    {
       "title": "Yearly Ridership (Brush to Select Year Range)",
-      "width": "container",
+      "width": 1500,
       "height": 100,
       "data": {"url": "data/ridership_filtered.csv"},
       "mark": "line",
@@ -220,6 +39,7 @@
       "encoding": {
         "x": {
           "field": "date",
+          "type": "temporal",
           "timeUnit": "yearmonth",
           "axis": {"title": "Year", "format": "%Y"}
         },
@@ -229,7 +49,7 @@
           "axis": {"title": "Total Ridership", "grid": false}
         },
         "color": {
-          "field": "route_line", 
+          "field": "route", 
           "type": "nominal",
           "scale": {
             "domain": {"expr": "railway_color_scale.domain"}, 
@@ -247,7 +67,7 @@
     },
     {
       "title": "",
-      "width": "container",
+      "width": 1500,
       "height": 100,
       "data": {"url": "data/ridership_filtered.csv"},
       "mark": "area",
@@ -266,7 +86,7 @@
           "title": "Total Ridership"
         },
         "color": {
-          "field": "route_line", 
+          "field": "route", 
           "type": "nominal",
           "scale": {
             "domain": {"expr": "railway_color_scale.domain"}, 
@@ -281,7 +101,7 @@
           }
         },
         "tooltip": [
-          {"field": "route_line", "title": "Route"},
+          {"field": "route", "title": "Route"},
           {"aggregate": "sum", "field": "ridership", "title": "Ridership"}
         ]
       }
