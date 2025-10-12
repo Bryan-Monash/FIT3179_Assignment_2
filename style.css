@@ -1,25 +1,86 @@
+#Msia_vis,
+#Selangor_vis {
+  width: 80vw;
+  height: 60vh;
+}
+
+#ridership_vis,
+#radar_vis {
+  width: 65vw;
+  height: 70vh;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 h1 {
-  margin-bottom: 20px;
+  text-align: center;
+  font-family: "Brush Script MT", cursive;
+  font-size: 40px;
+  font-weight: 600;
+  margin: 20px 0;
+  text-transform: uppercase;
+}
+
+#vg-tooltip-element {
+    font-size: 16px; 
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #fafafa;
   color: #222;
 }
 
-#vis {
-  margin: 0 auto;
-  background: white;
-  border: 1px solid #ccc;
-  box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
-  padding: 10px;
-  border-radius: 8px;
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
-.vg-tooltip {
-  font-size: 24px !important;
+.viz-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.viz-row.reverse {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.text-box {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.text-box h2 {
+  margin-top: 0;
+  color: #1b4b72;
+}
+
+.viz-container {
+  width: auto;
+  height: auto;
+}
+
+/* Make it responsive */
+@media (max-width: 1000px) {
+  .viz-row, .viz-row.reverse {
+    grid-template-columns: 1fr;
+  }
+  .text-box {
+    order: -1;
+  }
 }

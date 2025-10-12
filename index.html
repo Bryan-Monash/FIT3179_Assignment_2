@@ -14,20 +14,63 @@
   <link rel="stylesheet" type="text/css" href="style.css" media="all">
 </head>
 <body>
-  <h1>Malaysia Population Density</h1>
+  <h1 class="page-title">Ridership in Malaysia</h1>
 
-  <div id="Msia_vis" style="width: 100vw; height: 100vh;"></div>
-  <div id="Selangor_vis", style="width: 100vw; height: 100vh;"></div>
-  <div id="ridership_vis" style="width: 100vw; height: 100vh;"></div>
+  <!-- Malaysia Visualization -->
+  <div class="viz-row">
+    <div class="text-box">
+      <h2>Malaysia Overview</h2>
+      <p>
+        The railway system in Malaysia is extensive, covering major urban areas and connecting various states. 
+        Even so, new routes are undergoing construction to improve connectivity and reduce travel time.
+      </p>
+    </div>
+    <div id="Msia_vis" class="viz-container"></div>
+  </div>
+
+  <!-- Selangor Visualization -->
+  <div class="viz-row">
+    <div class="text-box">
+      <h2>Selangor, Kuala Lumpur & Putrajaya Details</h2>
+      <p>
+        Focusing on Selangor, Kuala Lumpur, and Putrajaya, there are where the railways are most established due to high population,
+        as well as working opportunities. The network centralizes around these states and expands northwards (Thailand) and southwards (Singapore) with KTM.
+      </p>
+    </div>
+    <div id="Selangor_vis" class="viz-container"></div>
+  </div>
+
+  <!-- Ridership Visualization -->
+  <div class="viz-row reverse">
+    <div id="ridership_vis" class="viz-container"></div>
+    <div class="text-box">
+      <h2>Public Transport Ridership</h2>
+      <p>
+        Back in April 2020, the ridership dropped significatnly due to the COVID-19 pandemic and the implementation of Movement Control Orders (MCOs).
+        As the situation improved and restrictions were lifted, ridership gradually increased, reaching pre-pandemic levels by early 2023.
+      </p>
+    </div>
+  </div>
+
+  <!-- Radar Visualization -->
+  <div class="viz-row reverse">
+    <div id="radar_vis" class="viz-container"></div>
+    <div class="text-box">
+      <h2>Performance Radar</h2>
+      <p>The radar chart compares key performance metrics such as coverage, efficiency, and satisfaction.</p>
+    </div>
+  </div>
 
   <script>
     const msia_spec = "js/malaysia_population.vg.json";
     const selangor_spec = "js/selangor_population.vg.json";
     const ridership_spec = "js/routes_ridership.vg.json";
-    
-    vegaEmbed("#Msia_vis", msia_spec).then(function(result) {}).catch(console.error);
-    vegaEmbed("#Selangor_vis", selangor_spec).then(function(result) {}).catch(console.error);
-    vegaEmbed("#ridership_vis", ridership_spec).then(function(result) {}).catch(console.error);
+    const radar_spec = "js/radar_chart.vg.json";
+
+    vegaEmbed("#Msia_vis", msia_spec).catch(console.error);
+    vegaEmbed("#Selangor_vis", selangor_spec).catch(console.error);
+    vegaEmbed("#ridership_vis", ridership_spec).catch(console.error);
+    vegaEmbed("#radar_vis", radar_spec).catch(console.error);
   </script>
 </body>
 </html>

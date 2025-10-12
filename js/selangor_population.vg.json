@@ -14,7 +14,7 @@
     "vconcat": [
       {
         "title": "Zooming into Selangor",
-        "width": 1500,
+        "width": "container",
         "height": 450,
         "projection": {"type": "mercator"},
         "layer": [
@@ -46,7 +46,14 @@
                 "field": "population",
                 "type": "quantitative",
                 "scale": {"type": "linear", "scheme": "oranges"},
-                "title": "Population (by thousands)"
+                "title": "Population (by thousands)",
+                "legend": {
+                  "orient": "bottom",
+                  "offset": 10,
+                  "direction": "horizontal",
+                  "titleLimit": 500,
+                  "labelLimit": 500
+                }
               },
               "tooltip": [
                 {"field": "district", "title": "District"},
@@ -111,6 +118,11 @@
               "stroke": {
                 "field": "route_line",
                 "type": "nominal",
+                "legend": {
+                  "title": "Railway Lines",
+                  "orient": "right",
+                  "offset": -100
+                },
                 "scale": {
                   "domain": [
                     "Kelana Jaya Line",
@@ -128,12 +140,10 @@
                     "#b2df8a",
                     "#636363"
                   ]
-                },
-                "legend": {"title": "Railway Lines"}
+                }
               },
               "tooltip": [
-                {"field": "line_name", "title": "Line Name"},
-                {"field": "route_line", "title": "Line Type"}
+                {"field": "route_line", "title": "Line Name"}
               ],
               "detail": {"field": "properties.@id"}
             }
@@ -143,9 +153,14 @@
     ],
     "config": {
       "legend": {
-          "titleFontSize": 24,
-          "labelFontSize": 20,
+          "titleFontSize": 16,
+          "labelFontSize": 14,
           "gradientHorizontalMaxLength": 500
+      },
+      "title": {
+        "font": "Times New Roman",
+        "fontSize": 20,
+        "fontWeight": "bold"
       }
   }
 }

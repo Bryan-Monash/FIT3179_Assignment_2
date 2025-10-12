@@ -14,7 +14,7 @@
   "vconcat": [
     {
       "title": "Malaysia Population Density by States",
-      "width": 1500,
+      "width": "container",
       "height": 450,
       "projection": {"type": "mercator"},
       "layer": [
@@ -162,6 +162,11 @@
             "stroke": {
               "field": "route_line",
               "type": "nominal",
+              "legend": {
+                "title": "Railway Lines",
+                "orient": "right",
+                "offset": -100
+              },
               "scale": {
                 "domain": [
                   "Kelana Jaya Line",
@@ -192,6 +197,11 @@
     }
   ],
   "config": {
+    "title": {
+      "font": "Times New Roman",
+      "fontSize": 20,
+      "fontWeight": "bold"
+    },
     "legend": {
         "titleFontSize": 16,
         "labelFontSize": 14,

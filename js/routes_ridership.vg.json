@@ -26,71 +26,46 @@
   "vconcat": [
     {
       "title": "Yearly Ridership (Brush to Select Year Range)",
-      "width": 1500,
+      "width": "container",
       "height": 100,
+      
       "data": {"url": "data/ridership_filtered.csv"},
-      "mark": "line",
-      "params": [
+      "layer": [
         {
-          "name": "time_brush",
-          "select": {"type": "interval", "encodings": ["x"]}
-        }
-      ],
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "timeUnit": "yearmonth",
-          "axis": {"title": "Year", "format": "%Y"}
-        },
-        "y": {
-          "aggregate": "sum",
-          "field": "ridership",
-          "axis": {"title": "Total Ridership", "grid": false}
-        },
-        "color": {
-          "field": "route", 
-          "type": "nominal",
-          "scale": {
-            "domain": {"expr": "railway_color_scale.domain"}, 
-            "range": [
-              "#1f78b4",
-              "#33a02c",
-              "#6a3d9a",
-              "#00bfc4",
-              "#b2df8a",
-              "#636363"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "hconcat": [
-        {
-          "title": "",
-          "width": 750,
-          "height": 100,
-          "data": {"url": "data/ridership_filtered.csv"},
-          "transform": [
-            {"filter": {"param": "time_brush"}}
+          "mark": "line",
+          "params": [
+            {
+              "name": "time_brush",
+              "select": {"type": "interval", "encodings": ["x"]}
+            }
           ],
-          "mark": "bar",
           "encoding": {
             "x": {
-              "field": "route", 
-              "type": "nominal", 
-              "title": "Route",
-              "axis": {"grid": false}
+              "field": "date",
+              "type": "temporal",
+              "timeUnit": "yearmonth",
+              "axis": {
+                "title": "Year", 
+                "format": "%Y",
+                "labelFontSize": 12
+              }
             },
             "y": {
-              "aggregate": "sum", 
-              "field": "ridership", 
-              "title": "Total Ridership"
+              "aggregate": "sum",
+              "field": "ridership",
+              "axis": {
+                "title": "Total Ridership", 
+                "grid": false,
+                "labelFontSize": 12
+              }
             },
             "color": {
               "field": "route", 
               "type": "nominal",
+              "legend": {
+                "title": "Route",
+                "orient": "right"
+              },
               "scale": {
                 "domain": {"expr": "railway_color_scale.domain"}, 
                 "range": [
@@ -102,53 +77,160 @@
                   "#636363"
                 ]
               }
-            },
-            "tooltip": [
-              {"field": "route", "title": "Route"},
-              {"aggregate": "sum", "field": "ridership", "title": "Ridership"},
-              {"field": "date", "title": "Date", "timeUnit": "yearmonth", "type": "temporal"}
-            ]
+            }
           }
         },
         {
-          "title": "Selangor Temperature Heatmap (°C)",
-          "width": 750,
-          "height": 100,
-          "data": {"url": "data/weather_selangor_cleaned.csv"},
           "transform": [
             {
-              "calculate": "toDate(datum.datetime)",
-              "as": "date"
-            },
-            {"filter": {"param": "time_brush"}}
-          ],
-          "mark": "rect",
-          "encoding": {
-            "x": {
-              "field": "date",
-              "type": "temporal",
               "timeUnit": "yearmonth",
-              "title": "Month"
+              "field": "date",
+              "as": "yearmonth"
             },
-            "y": {
-              "field": "city",
-              "type": "nominal",
-              "title": "City"
+            {
+              "aggregate": [
+                {"op": "sum", "field": "ridership_int", "as": "total_ridership"}
+              ],
+              "groupby": ["yearmonth"]
             },
-            "color": {
-              "aggregate": "mean",
-              "field": "temperature",
-              "type": "quantitative",
-              "scale": {"scheme": "yelloworangebrown"},
-              "title": "Temperature (°C)"
+            {
+              "window": [
+                {"op": "min", "field": "total_ridership", "as": "min_ridership"}
+              ]
+            },
+            {
+              "filter": "datum.total_ridership == datum.min_ridership"
+            },
+            {
+              "calculate": "'The least ridership is during April 2020'",
+              "as": "annotation"
             }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dy": 40,
+            "fontSize": 14,
+            "color": "black"
+          },
+          "encoding": {
+            "x": {"datum": 0},
+            "y": {"datum": 0},
+            "text": {"field": "annotation"}
           }
         }
       ]
+    },
+    {
+      "title": "Ridership by Route",
+      "width": "container",
+      "data": {"url": "data/ridership_filtered.csv"},
+      "transform": [
+        {"filter": {"param": "time_brush"}},
+        {
+          "aggregate": [
+            {"op": "sum", "field": "ridership", "as": "total_ridership"}
+          ],
+          "groupby": ["route"]
+        }
+      ],
+      "mark": "bar",
+      "encoding": {
+        "x": {
+          "field": "route", 
+          "type": "nominal",
+          "title": "Route",
+          "axis": {
+            "grid": false,
+            "labelAngle": 0,
+            "labelFontSize": 12
+          },
+          "sort": "-y"
+        },
+        "y": {
+          "field": "total_ridership",
+          "type": "quantitative",
+          "title": "Total Ridership",
+          "axis":  {
+            "labelFontSize": 12
+          }
+        },
+        "color": {
+          "field": "route", 
+          "type": "nominal",
+          "legend": {
+            "title": "Route",
+            "orient": "right"
+          },
+          "scale": {
+            "domain": {"expr": "railway_color_scale.domain"}, 
+            "range": [
+              "#1f78b4",
+              "#33a02c",
+              "#6a3d9a",
+              "#00bfc4",
+              "#b2df8a",
+              "#636363"
+            ]
+          }
+        },
+        "tooltip": [
+          {"field": "route", "title": "Route"},
+          {"field": "total_ridership", "title": "Ridership"}
+        ]
+      }
+    },
+    {
+      "title": "Selangor Temperature Heatmap (°C)",
+      "width": "container",
+      "data": {"url": "data/weather_selangor_cleaned.csv"},
+      "transform": [
+        {
+          "calculate": "toDate(datum.datetime)",
+          "as": "date"
+        },
+        {"filter": {"param": "time_brush"}}
+      ],
+      "mark": "rect",
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "timeUnit": "yearmonth",
+          "title": "Month",
+          "axis":  {
+            "labelFontSize": 12
+          }
+        },
+        "y": {
+          "field": "city",
+          "type": "nominal",
+          "title": "City",
+          "axis":  {
+            "labelFontSize": 12
+          }
+        },
+        "color": {
+          "aggregate": "mean",
+          "field": "temperature",
+          "type": "quantitative",
+          "scale": {"scheme": "yelloworangebrown"},
+          "title": "Temperature (°C)",
+          "legend": {
+            "title": "Temperature (°C)",
+            "orient": "right"
+          }
+        }
+      }
     }
   ],
   "config": {
-    "title": {"font": "sans-serif", "fontSize": 14},
-    "legend": {"titleFontSize": 11, "labelFontSize": 10}
+    "title": {
+      "font": "Times New Roman",
+      "fontSize": 20,
+      "fontWeight": "bold"
+    },
+    "legend": {"titleFontSize": 16, "labelFontSize": 14},
+    "concat": {"spacing": 20}
   }
 }
