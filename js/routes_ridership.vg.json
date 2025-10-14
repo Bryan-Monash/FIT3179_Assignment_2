@@ -230,14 +230,31 @@
             "title": "Temperature (°C)",
             "orient": "right"
           }
-        }
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {
+            "field": "date",
+            "title": "Month",
+            "type": "temporal",
+            "timeUnit": "yearmonth",
+            "format": "%B %Y"
+          },
+          {
+            "aggregate": "mean",
+            "field": "temperature",
+            "title": "Average Temperature (°C)",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
       }
     }
   ],
   "config": {
     "title": {
       "font": "Times New Roman",
-      "fontSize": 20,
+      "fontSize": 24,
       "fontWeight": "bold"
     },
     "legend": {"titleFontSize": 16, "labelFontSize": 14},

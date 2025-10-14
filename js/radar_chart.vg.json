@@ -4,7 +4,7 @@
    "width": 650,
   "height": 650,
   "autosize": {"type": "none"},
-  "padding": {"top": 60, "bottom": 60, "left": 160, "right": 60},
+  "padding": {"top": 60, "bottom": 60, "left": 160, "right": 160},
   "signals": [
     {"name": "radius", "update": "min(width, height) / 2 - 100"},
     {
@@ -210,5 +210,13 @@
         }
       ]
     }
-  ]
+  ],
+  "config": {
+    "title": {
+      "font": "Times New Roman",
+      "fontSize": 24,
+      "fontWeight": "bold"
+    },
+    "legend": {"titleFontSize": 16, "labelFontSize": 14}
+  }
 }
