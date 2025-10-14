@@ -15,7 +15,7 @@
       {
         "title": "Zooming into Selangor",
         "width": "container",
-        "height": 450,
+        "height": 700,
         "projection": {"type": "mercator"},
         "layer": [
           {
@@ -43,10 +43,10 @@
             "encoding": {
               "shape": {"field": "geo", "type": "geojson"},
               "color": {
-                "field": "population",
+                "field": "population_density",
                 "type": "quantitative",
-                "scale": {"type": "linear", "scheme": "oranges"},
-                "title": "Population (by thousands)",
+                "scale": {"type": "log", "scheme": "oranges"},
+                "title": "Population Density (per km²)",
                 "legend": {
                   "orient": "bottom",
                   "offset": 10,
@@ -85,10 +85,10 @@
             "encoding": {
               "shape": {"field": "geo", "type": "geojson"},
               "color": {
-                "field": "population",
+                "field": "population_density",
                 "type": "quantitative",
-                "scale": {"type": "linear", "scheme": "oranges"},
-                "title": "Population (by thousands)"
+                "scale": {"type": "log", "scheme": "oranges"},
+                "title": "Population Density (per km²)"
               },
               "tooltip": [
                 {"field": "district", "title": "District"},

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Malaysia Population Density</title>
+  <title>Ridership Visualization</title>
 
   <!-- Vega & Vega-Lite -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
 
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="style.css" media="all">
@@ -17,7 +17,8 @@
   <h1 class="page-title">Ridership in Malaysia</h1>
 
   <!-- Malaysia Visualization -->
-  <div class="viz-row">
+  <div class="viz-section">
+    <div id="Msia_vis" class="viz-container"></div>
     <div class="text-box">
       <h2>Malaysia Overview</h2>
       <p>
@@ -25,23 +26,10 @@
         Even so, new routes are undergoing construction to improve connectivity and reduce travel time.
       </p>
     </div>
-    <div id="Msia_vis" class="viz-container"></div>
-  </div>
-
-  <!-- Selangor Visualization -->
-  <div class="viz-row">
-    <div class="text-box">
-      <h2>Selangor, Kuala Lumpur & Putrajaya Details</h2>
-      <p>
-        Focusing on Selangor, Kuala Lumpur, and Putrajaya, there are where the railways are most established due to high population,
-        as well as working opportunities. The network centralizes around these states and expands northwards (Thailand) and southwards (Singapore) with KTM.
-      </p>
-    </div>
-    <div id="Selangor_vis" class="viz-container"></div>
   </div>
 
   <!-- Ridership Visualization -->
-  <div class="viz-row reverse">
+  <div class="viz-section">
     <div id="ridership_vis" class="viz-container"></div>
     <div class="text-box">
       <h2>Public Transport Ridership</h2>
@@ -52,9 +40,21 @@
     </div>
   </div>
 
+  <!-- Selangor Visualization -->
+  <div class="viz-section">
+    <div id="Selangor_vis" class="viz-container"></div>
+    <div class="text-box">
+      <h2>Selangor, Kuala Lumpur & Putrajaya Details</h2>
+      <p>
+        Focusing on Selangor, Kuala Lumpur, and Putrajaya, there are where the railways are most established due to high population,
+        as well as working opportunities. The network centralizes around these states and expands northwards (Thailand) and southwards (Singapore) with KTM.
+      </p>
+    </div>
+  </div>
+
   <!-- Radar Visualization -->
-  <div class="viz-row reverse">
-    <div id="radar_vis" class="viz-container"></div>
+  <div id="radar_vis"></div>
+  <div class="viz-section">
     <div class="text-box">
       <h2>Performance Radar</h2>
       <p>The radar chart compares key performance metrics such as coverage, efficiency, and satisfaction.</p>

@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "autosize": {"type": "fit-x", "contains": "padding"},
   "params": [
     {
       "name": "railway_color_scale",
@@ -28,7 +29,6 @@
       "title": "Yearly Ridership (Brush to Select Year Range)",
       "width": "container",
       "height": 100,
-      
       "data": {"url": "data/ridership_filtered.csv"},
       "layer": [
         {
@@ -47,7 +47,8 @@
               "axis": {
                 "title": "Year", 
                 "format": "%Y",
-                "labelFontSize": 12
+                "labelFontSize": 12,
+                "grid": true
               }
             },
             "y": {
@@ -79,51 +80,13 @@
               }
             }
           }
-        },
-        {
-          "transform": [
-            {
-              "timeUnit": "yearmonth",
-              "field": "date",
-              "as": "yearmonth"
-            },
-            {
-              "aggregate": [
-                {"op": "sum", "field": "ridership_int", "as": "total_ridership"}
-              ],
-              "groupby": ["yearmonth"]
-            },
-            {
-              "window": [
-                {"op": "min", "field": "total_ridership", "as": "min_ridership"}
-              ]
-            },
-            {
-              "filter": "datum.total_ridership == datum.min_ridership"
-            },
-            {
-              "calculate": "'The least ridership is during April 2020'",
-              "as": "annotation"
-            }
-          ],
-          "mark": {
-            "type": "text",
-            "align": "left",
-            "dy": 40,
-            "fontSize": 14,
-            "color": "black"
-          },
-          "encoding": {
-            "x": {"datum": 0},
-            "y": {"datum": 0},
-            "text": {"field": "annotation"}
-          }
         }
       ]
     },
     {
       "title": "Ridership by Route",
       "width": "container",
+      "height":200,
       "data": {"url": "data/ridership_filtered.csv"},
       "transform": [
         {"filter": {"param": "time_brush"}},
@@ -136,7 +99,7 @@
       ],
       "mark": "bar",
       "encoding": {
-        "x": {
+        "y": {
           "field": "route", 
           "type": "nominal",
           "title": "Route",
@@ -145,9 +108,10 @@
             "labelAngle": 0,
             "labelFontSize": 12
           },
-          "sort": "-y"
+          "sort": "-x",
+          "scale": {"padding": 0.5}
         },
-        "y": {
+        "x": {
           "field": "total_ridership",
           "type": "quantitative",
           "title": "Total Ridership",
@@ -181,12 +145,58 @@
       }
     },
     {
-      "title": "Selangor Temperature Heatmap (°C)",
+      "title": "Fuel Price in Malaysia",
       "width": "container",
-      "data": {"url": "data/weather_selangor_cleaned.csv"},
+      "data": {"url": "data/fuelprice_filtered.csv"},
+      "transform": [
+        {"filter": {"param": "time_brush"}},
+        {
+          "fold": ["ron95", "ron97"],
+          "as": ["fuel_type", "price"]
+        }
+      ],
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": "Year",
+          "axis":  {
+            "labelExpr": "timeFormat(datum.value, '%B %Y')",
+            "labelFontSize": 12,
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "title": "Fuel Price (MYR)",
+          "axis":  {
+            "labelFontSize": 12
+          }
+        },
+        "color": {
+          "field": "fuel_type",
+          "type": "nominal",
+          "title": "Fuel Type",
+          "scale": {
+            "domain": ["ron95", "ron97"],
+            "range": ["#ff7f0e", "#2ca02c"]
+          },
+          "legend": {
+            "title": "Fuel Type",
+            "orient": "right"
+          }
+        }
+      }
+    },  
+    {
+      "title": "Malaysia Temperature Heatmap",
+      "width": "container",
+      "data": {"url": "data/weather_filtered_temperature.csv"},
       "transform": [
         {
-          "calculate": "toDate(datum.datetime)",
+          "calculate": "toDate(datum.date)",
           "as": "date"
         },
         {"filter": {"param": "time_brush"}}
@@ -203,9 +213,9 @@
           }
         },
         "y": {
-          "field": "city",
+          "field": "state",
           "type": "nominal",
-          "title": "City",
+          "title": "State",
           "axis":  {
             "labelFontSize": 12
           }
@@ -231,6 +241,6 @@
       "fontWeight": "bold"
     },
     "legend": {"titleFontSize": 16, "labelFontSize": 14},
-    "concat": {"spacing": 20}
+    "concat": {"spacing": 100}
   }
 }

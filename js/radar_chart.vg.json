@@ -1,13 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "title": "Weather Metrics in Selangor",
-  "width": 1000,
-  "height": 1000,
-  "padding": 250,
-  "autosize": {"type": "none", "contains": "padding"},
-
+   "width": 650,
+  "height": 650,
+  "autosize": {"type": "none"},
+  "padding": {"top": 60, "bottom": 60, "left": 160, "right": 60},
   "signals": [
-    {"name": "radius", "update": "width / 2"},
+    {"name": "radius", "update": "min(width, height) / 2 - 100"},
     {
       "name": "selected_year",
       "value": 2024,

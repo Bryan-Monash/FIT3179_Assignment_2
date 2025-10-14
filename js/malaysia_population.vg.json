@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "autosize": {"type": "fit-x", "contains": "padding"},
   "params": [
     {
       "name": "Selected_year",
@@ -15,7 +16,7 @@
     {
       "title": "Malaysia Population Density by States",
       "width": "container",
-      "height": 450,
+      "height": 700,
       "projection": {"type": "mercator"},
       "layer": [
         {
@@ -164,7 +165,7 @@
               "type": "nominal",
               "legend": {
                 "title": "Railway Lines",
-                "orient": "right",
+                "orient": "top-right",
                 "offset": -100
               },
               "scale": {

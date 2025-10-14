@@ -1,56 +1,56 @@
-year,state,district,sex,age,ethnicity,population
-2020,Selangor,Gombak,both,overall,overall,942.4
-2020,Selangor,Klang,both,overall,overall,1088.9
-2020,Selangor,Kuala Langat,both,overall,overall,307.4
-2020,Selangor,Kuala Selangor,both,overall,overall,281.7
-2020,Selangor,Petaling,both,overall,overall,2298.1
-2020,Selangor,Sabak Bernam,both,overall,overall,107.1
-2020,Selangor,Sepang,both,overall,overall,325.2
-2020,Selangor,Ulu Langat,both,overall,overall,1400.5
-2020,Selangor,Ulu Selangor,both,overall,overall,243.0
-2020,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1982.1
-2020,Putrajaya,Putrajaya,both,overall,overall,109.2
-2021,Selangor,Gombak,both,overall,overall,948.0
-2021,Selangor,Klang,both,overall,overall,1078.7
-2021,Selangor,Kuala Langat,both,overall,overall,312.2
-2021,Selangor,Kuala Selangor,both,overall,overall,285.1
-2021,Selangor,Petaling,both,overall,overall,2315.7
-2021,Selangor,Sabak Bernam,both,overall,overall,107.5
-2021,Selangor,Sepang,both,overall,overall,330.7
-2021,Selangor,Ulu Langat,both,overall,overall,1393.3
-2021,Selangor,Ulu Selangor,both,overall,overall,243.4
-2021,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1964.0
-2021,Putrajaya,Putrajaya,both,overall,overall,115.2
-2022,Selangor,Gombak,both,overall,overall,950.2
-2022,Selangor,Klang,both,overall,overall,1094.1
-2022,Selangor,Kuala Langat,both,overall,overall,314.5
-2022,Selangor,Kuala Selangor,both,overall,overall,287.6
-2022,Selangor,Petaling,both,overall,overall,2304.8
-2022,Selangor,Sabak Bernam,both,overall,overall,107.9
-2022,Selangor,Sepang,both,overall,overall,331.5
-2022,Selangor,Ulu Langat,both,overall,overall,1413.3
-2022,Selangor,Ulu Selangor,both,overall,overall,246.4
-2022,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1961.2
-2022,Putrajaya,Putrajaya,both,overall,overall,117.0
-2023,Selangor,Gombak,both,overall,overall,966.2
-2023,Selangor,Klang,both,overall,overall,1134.0
-2023,Selangor,Kuala Langat,both,overall,overall,320.7
-2023,Selangor,Kuala Selangor,both,overall,overall,293.2
-2023,Selangor,Petaling,both,overall,overall,2334.7
-2023,Selangor,Sabak Bernam,both,overall,overall,109.2
-2023,Selangor,Sepang,both,overall,overall,339.2
-2023,Selangor,Ulu Langat,both,overall,overall,1460.3
-2023,Selangor,Ulu Selangor,both,overall,overall,252.2
-2023,Kuala Lumpur,Kuala Lumpur,both,overall,overall,2005.7
-2023,Putrajaya,Putrajaya,both,overall,overall,118.8
-2024,Selangor,Gombak,both,overall,overall,980.3
-2024,Selangor,Klang,both,overall,overall,1174.9
-2024,Selangor,Kuala Langat,both,overall,overall,326.3
-2024,Selangor,Kuala Selangor,both,overall,overall,298.4
-2024,Selangor,Petaling,both,overall,overall,2360.0
-2024,Selangor,Sabak Bernam,both,overall,overall,110.3
-2024,Selangor,Sepang,both,overall,overall,346.9
-2024,Selangor,Ulu Langat,both,overall,overall,1508.1
-2024,Selangor,Ulu Selangor,both,overall,overall,258.1
-2024,Kuala Lumpur,Kuala Lumpur,both,overall,overall,2067.5
-2024,Putrajaya,Putrajaya,both,overall,overall,120.3
+year,state,district,sex,age,ethnicity,population,population_absolute,area_km2,population_density
+2020,Selangor,Gombak,both,overall,overall,942.4,942400.0,650.1,1449.6231349023226
+2020,Selangor,Klang,both,overall,overall,1088.9,1088900.0,626.8,1737.2367581365668
+2020,Selangor,Kuala Langat,both,overall,overall,307.4,307400.0,858.0,358.27505827505826
+2020,Selangor,Kuala Selangor,both,overall,overall,281.7,281700.0,1195.0,235.73221757322176
+2020,Selangor,Petaling,both,overall,overall,2298.1,2298100.0,484.3,4745.199256659095
+2020,Selangor,Sabak Bernam,both,overall,overall,107.1,107100.0,997.1,107.41149333065891
+2020,Selangor,Sepang,both,overall,overall,325.2,325200.0,599.7,542.2711355677839
+2020,Selangor,Ulu Langat,both,overall,overall,1400.5,1400500.0,829.4,1688.5700506390162
+2020,Selangor,Ulu Selangor,both,overall,overall,243.0,243000.0,1756.0,138.38268792710707
+2020,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1982.1,1982100.0,243.0,8156.79012345679
+2020,Putrajaya,Putrajaya,both,overall,overall,109.2,109200.0,49.0,2228.5714285714284
+2021,Selangor,Gombak,both,overall,overall,948.0,948000.0,650.1,1458.2371942778034
+2021,Selangor,Klang,both,overall,overall,1078.7,1078700.0,626.8,1720.9636247606893
+2021,Selangor,Kuala Langat,both,overall,overall,312.2,312200.0,858.0,363.86946386946386
+2021,Selangor,Kuala Selangor,both,overall,overall,285.1,285100.0,1195.0,238.5774058577406
+2021,Selangor,Petaling,both,overall,overall,2315.7,2315700.0,484.3,4781.540367540781
+2021,Selangor,Sabak Bernam,both,overall,overall,107.5,107500.0,997.1,107.81265670444289
+2021,Selangor,Sepang,both,overall,overall,330.7,330700.0,599.7,551.4423878605969
+2021,Selangor,Ulu Langat,both,overall,overall,1393.3,1393300.0,829.4,1679.8890764408006
+2021,Selangor,Ulu Selangor,both,overall,overall,243.4,243400.0,1756.0,138.61047835990888
+2021,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1964.0,1964000.0,243.0,8082.3045267489715
+2021,Putrajaya,Putrajaya,both,overall,overall,115.2,115200.0,49.0,2351.0204081632655
+2022,Selangor,Gombak,both,overall,overall,950.2,950200.0,650.1,1461.6212890324564
+2022,Selangor,Klang,both,overall,overall,1094.1,1094100.0,626.8,1745.5328653477984
+2022,Selangor,Kuala Langat,both,overall,overall,314.5,314500.0,858.0,366.55011655011657
+2022,Selangor,Kuala Selangor,both,overall,overall,287.6,287600.0,1195.0,240.6694560669456
+2022,Selangor,Petaling,both,overall,overall,2304.8,2304800.0,484.3,4759.033656824282
+2022,Selangor,Sabak Bernam,both,overall,overall,107.9,107900.0,997.1,108.21382007822686
+2022,Selangor,Sepang,both,overall,overall,331.5,331500.0,599.7,552.776388194097
+2022,Selangor,Ulu Langat,both,overall,overall,1413.3,1413300.0,829.4,1704.0028936580661
+2022,Selangor,Ulu Selangor,both,overall,overall,246.4,246400.0,1756.0,140.31890660592256
+2022,Kuala Lumpur,Kuala Lumpur,both,overall,overall,1961.2,1961200.0,243.0,8070.781893004115
+2022,Putrajaya,Putrajaya,both,overall,overall,117.0,117000.0,49.0,2387.7551020408164
+2023,Selangor,Gombak,both,overall,overall,966.2,966200.0,650.1,1486.2328872481157
+2023,Selangor,Klang,both,overall,overall,1134.0,1134000.0,626.8,1809.189534141672
+2023,Selangor,Kuala Langat,both,overall,overall,320.7,320700.0,858.0,373.7762237762238
+2023,Selangor,Kuala Selangor,both,overall,overall,293.2,293200.0,1195.0,245.35564853556485
+2023,Selangor,Petaling,both,overall,overall,2334.7,2334700.0,484.3,4820.772248606236
+2023,Selangor,Sabak Bernam,both,overall,overall,109.2,109200.0,997.1,109.51760104302477
+2023,Selangor,Sepang,both,overall,overall,339.2,339200.0,599.7,565.6161414040353
+2023,Selangor,Ulu Langat,both,overall,overall,1460.3,1460300.0,829.4,1760.67036411864
+2023,Selangor,Ulu Selangor,both,overall,overall,252.2,252200.0,1756.0,143.62186788154898
+2023,Kuala Lumpur,Kuala Lumpur,both,overall,overall,2005.7,2005700.0,243.0,8253.909465020575
+2023,Putrajaya,Putrajaya,both,overall,overall,118.8,118800.0,49.0,2424.4897959183672
+2024,Selangor,Gombak,both,overall,overall,980.3,980300.0,650.1,1507.9218581756652
+2024,Selangor,Klang,both,overall,overall,1174.9,1174900.0,626.8,1874.4416081684749
+2024,Selangor,Kuala Langat,both,overall,overall,326.3,326300.0,858.0,380.3030303030303
+2024,Selangor,Kuala Selangor,both,overall,overall,298.4,298400.0,1195.0,249.7071129707113
+2024,Selangor,Petaling,both,overall,overall,2360.0,2360000.0,484.3,4873.012595498658
+2024,Selangor,Sabak Bernam,both,overall,overall,110.3,110300.0,997.1,110.6208003209307
+2024,Selangor,Sepang,both,overall,overall,346.9,346900.0,599.7,578.4558946139736
+2024,Selangor,Ulu Langat,both,overall,overall,1508.1,1508100.0,829.4,1818.3023872679046
+2024,Selangor,Ulu Selangor,both,overall,overall,258.1,258100.00000000003,1756.0,146.98177676537588
+2024,Kuala Lumpur,Kuala Lumpur,both,overall,overall,2067.5,2067500.0,243.0,8508.230452674898
+2024,Putrajaya,Putrajaya,both,overall,overall,120.3,120300.0,49.0,2455.1020408163267
