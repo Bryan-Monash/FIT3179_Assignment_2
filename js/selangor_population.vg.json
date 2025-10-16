@@ -14,7 +14,6 @@
     "title": "Looking into Detail around Kuala Lumpur",
     "width": "container",
     "height": 700,
-    "padding": {"right": 20},
     "projection": {
       "type": "equirectangular",
       "center": [101.6841, 3.1319],
@@ -178,9 +177,7 @@
             "type": "nominal",
             "legend": {
               "title": "Railway Lines",
-              "orient": "none",
-              "legendX": 950,
-              "legendY": 20,
+              "orient": "top-right",
               "fillColor": "white",
               "strokeColor": "black",
               "padding": 10,

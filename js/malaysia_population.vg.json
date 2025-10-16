@@ -1,7 +1,5 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "autosize": {"type": "fit-x", "contains": "padding"},
-  "padding": {"right": 20},
   "params": [
     {
       "name": "Selected_year",

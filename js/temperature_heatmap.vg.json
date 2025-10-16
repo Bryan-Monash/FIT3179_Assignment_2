@@ -1,10 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "autosize": {"type": "fit-x", "contains": "padding"},
   "title": "Malaysia Temperature Heatmap",
   "width": "container",
   "height": 400,
-  "padding": {"right": 20},
   "data": {"url": "data/weather_filtered_temperature.csv"},
   "transform": [
     {
@@ -44,7 +42,7 @@
       "legend": {
         "title": "Temperature (°C)",
         "orient": "none",
-        "legendX": 800,
+        "legendX": 750,
         "legendY": 430,
         "direction": "horizontal"
       }

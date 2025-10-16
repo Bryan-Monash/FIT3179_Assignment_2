@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "title": "Weather Metrics in Selangor",
-   "width": 650,
+  "width": 650,
   "height": 650,
   "autosize": {"type": "none"},
   "padding": {"top": 100, "bottom": 30, "left": 160, "right": 160},

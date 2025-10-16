@@ -66,65 +66,42 @@ h3 {
   text-transform: uppercase;
 }
 
-.viz-container {
-  width: 90vw;
-  min-height: 60vh; /* Keeps height large and responsive */
-  height: auto;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  box-sizing: border-box;
-  padding: 1.5rem;
-}
-
-.viz-container-2 {
-  width: 60vw;
-  min-height: 60vh; /* Keeps height large and responsive */
-  height: auto;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  box-sizing: border-box;
-  padding: 1.5rem;
-}
-
-.viz-section-row {
-  width: 100vw;
-  min-height: 50vh;
-  height: auto;
-  display: grid;
-  padding: 2em 8em 3em 8em;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  margin-bottom: 5rem;
-  gap: 4rem;
-}
-
-/* Section layout */
 .viz-section-column {
   width: 100vw;
   min-height: 50vh;
-  height: auto;
   display: flex;
-  padding: 2em 0 3em 0;
-  flex-direction: column;
+  padding: 3em 0 3em 0;
   justify-content: center;
   align-items: center;
   margin-bottom: 4rem;
 }
 
-/* Text box styling */
-.text-box-horizontal {
-    width: 100vw;
-    padding: 2em 10em 3em 10em;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 2em;
+.viz-section-column .viz-container {
+  width: 95vw;
+  min-height: 60vh;
+}
+
+.viz-section-row {
+  width: 100vw;
+  min-height: 50vh;
+  display: grid;
+  padding: 2em 8em 3em 8em;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 4rem;
+  margin-bottom: 4em;
+}
+
+.viz-section-row .viz-container {
+  width: 100%;
+  min-height: 60vh;
+}
+
+.viz-section-row .text-box {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  color: #333;
 }
 
 .title-text {

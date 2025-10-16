@@ -1,6 +1,5 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "autosize": {"type": "fit-x", "contains": "padding"},
   "params": [
     {
       "name": "railway_color_scale",
@@ -169,6 +168,7 @@
       "titleFontSize": 13.5, 
       "labelFontSize": 12.5
     },
-    "concat": {"spacing": 50}
+    "concat": {"spacing": 50},
+    "autosize": {"type": "fit-x", "contains": "padding"}
   }
 }

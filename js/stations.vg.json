@@ -6,7 +6,7 @@
   "projection": {
     "type": "equirectangular",
     "center": [109.455475, 4.10932],
-    "scale": 2500
+    "scale": 2300
   },
   "layer": [
     {
@@ -67,9 +67,7 @@
           "scale": {"range": [100, 3000]},
           "legend": {
             "title": "Total Stations",
-            "orient": "none",
-            "legendX": 1000,
-            "legendY": 10,
+            "orient": "top-right",
             "fillColor": "white",
             "strokeColor": "black",
             "padding": 10,
