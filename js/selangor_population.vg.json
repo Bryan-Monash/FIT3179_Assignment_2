@@ -11,150 +11,220 @@
         }
       }
     ],
-    "vconcat": [
+    "title": "Looking into Detail around Kuala Lumpur",
+    "width": "container",
+    "height": 700,
+    "padding": {"right": 20},
+    "projection": {
+      "type": "equirectangular",
+      "center": [101.6841, 3.1319],
+      "scale": 26000
+    },
+    "layer": [
       {
-        "title": "Zooming into Selangor",
-        "width": "container",
-        "height": 700,
-        "projection": {"type": "mercator"},
-        "layer": [
+        "data": {
+          "url": "map_data/ne_10m_land.json",
+          "format": {"type": "topojson", "feature": "ne_10m_land"}
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "lightgray",
+          "stroke": "white",
+          "strokeWidth": 0.5
+        }
+      },
+      {
+        "data": {
+          "url": "map_data/ne_10m_ocean.json",
+          "format": {"type": "topojson", "feature": "ne_10m_ocean"}
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "#cce5ff",
+          "stroke": "white"
+        }
+      },
+      {
+        "data": {
+          "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+          "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "lightgray",
+          "stroke": "white",
+          "strokeWidth": 0.5  
+        }
+      },
+      {
+        "data": {"url": "data/population_district_filtered.csv"},
+        "transform": [
           {
-            "data": {"url": "data/population_district_filtered.csv"},
-            "transform": [
-              {
-                "filter": "datum.year == Selected_year"
-              },
-              {
-                "filter": "datum.district == 'Kuala Lumpur' || datum.district == 'Gombak' || datum.district == 'Ulu Langat' || datum.district == 'Sepang' || datum.district == 'Klang' || datum.district == 'Petaling' || datum.district == 'Ulu Selangor' || datum.district == 'Sabak Bernam' || datum.district == 'Kuala Selangor' || datum.district == 'Kuala Langat'"
-              },
-              {
-                "lookup": "district",
-                "from": {
-                  "data": {
-                    "url": "map_data/geoBoundaries-MYS-ADM2.topojson",
-                    "format": {"type": "topojson", "feature": "MYSADM2gbOpen"}
-                  },
-                  "key": "properties.shapeName"
-                },
-                "as": "geo"
-              }
-            ],
-            "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-            "encoding": {
-              "shape": {"field": "geo", "type": "geojson"},
-              "color": {
-                "field": "population_density",
-                "type": "quantitative",
-                "scale": {"type": "log", "scheme": "oranges"},
-                "title": "Population Density (per km²)",
-                "legend": {
-                  "orient": "bottom",
-                  "offset": 10,
-                  "direction": "horizontal",
-                  "titleLimit": 500,
-                  "labelLimit": 500
-                }
-              },
-              "tooltip": [
-                {"field": "district", "title": "District"},
-                {"field": "year", "title": "Year"},
-                {"field": "population", "title": "Population (by thousands)"}
-              ]
-            }
+            "filter": "datum.year == Selected_year"
           },
           {
-            "data": {"url": "data/population_district_filtered.csv"},
-            "transform": [
-              {
-                "filter": "datum.year == Selected_year"
-              },
-              {"filter": "datum.district == 'Putrajaya'"},
-              {
-                "lookup": "district",
-                "from": {
-                  "data": {
-                    "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
-                    "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
-                  },
-                  "key": "properties.shapeName"
-                },
-                "as": "geo"
-              }
-            ],
-            "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-            "encoding": {
-              "shape": {"field": "geo", "type": "geojson"},
-              "color": {
-                "field": "population_density",
-                "type": "quantitative",
-                "scale": {"type": "log", "scheme": "oranges"},
-                "title": "Population Density (per km²)"
-              },
-              "tooltip": [
-                {"field": "district", "title": "District"},
-                {"field": "year", "title": "Latest Year"},
-                {"field": "population", "title": "Population (by thousands)"}
-              ]
-            }
+            "filter": "datum.district == 'Kuala Lumpur' || datum.district == 'Gombak' || datum.district == 'Ulu Langat' || datum.district == 'Sepang' || datum.district == 'Klang' || datum.district == 'Petaling' || datum.district == 'Ulu Selangor' || datum.district == 'Sabak Bernam' || datum.district == 'Kuala Selangor' || datum.district == 'Kuala Langat'"
           },
           {
-            "data": {
-              "url": "map_data/routes_selangor2.geojson",
-              "format": {"type": "json", "property": "features"}
+            "lookup": "district",
+            "from": {
+              "data": {
+                "url": "map_data/geoBoundaries-MYS-ADM2.topojson",
+                "format": {"type": "topojson", "feature": "MYSADM2gbOpen"}
+              },
+              "key": "properties.shapeName"
             },
-            "transform": [
-              {
-                "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
-                "as": "route_line"
-              },
-              {"flatten": ["geometry.coordinates"], "as": ["coord"]},
-              {"calculate": "datum.coord[0]", "as": "lon"},
-              {"calculate": "datum.coord[1]", "as": "lat"}
-            ],
-            "mark": {"type": "line", "strokeWidth": 5, "opacity": 0.7},
-            "encoding": {
-              "longitude": {"field": "lon", "type": "quantitative"},
-              "latitude": {"field": "lat", "type": "quantitative"},
-              "stroke": {
-                "field": "route_line",
-                "type": "nominal",
-                "legend": {
-                  "title": "Railway Lines",
-                  "orient": "right",
-                  "offset": -100
-                },
-                "scale": {
-                  "domain": [
-                    "Kelana Jaya Line",
-                    "Ampang Line",
-                    "Putrajaya Line",
-                    "Kajang Line",
-                    "KTM",
-                    "KL Monorail"
-                  ],
-                  "range": [
-                    "#1f78b4",
-                    "#33a02c",
-                    "#6a3d9a",
-                    "#00bfc4",
-                    "#b2df8a",
-                    "#636363"
-                  ]
-                }
-              },
-              "tooltip": [
-                {"field": "route_line", "title": "Line Name"}
-              ],
-              "detail": {"field": "properties.@id"}
-            }
+            "as": "geo"
           }
-        ]
+        ],
+        "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+        "encoding": {
+          "shape": {"field": "geo", "type": "geojson"},
+          "color": {
+            "field": "population_density",
+            "type": "quantitative",
+            "scale": {
+              "type": "threshold",
+              "domain": [0, 200, 300, 500, 1000, 2000, 4000, 8000],
+              "scheme": "oranges"
+            },
+            "title": "Population Density (per km²)",
+            "legend": {
+              "orient": "bottom-right",
+              "offset": 10,
+              "direction": "horizontal"
+            }
+          },
+          "tooltip": [
+            {"field": "district", "title": "District"},
+            {"field": "year", "title": "Year"},
+            {"field": "population", "title": "Population (by thousands)"},
+            {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"}
+          ]
+        }
+      },
+      {
+        "data": {"url": "data/population_district_filtered.csv"},
+        "transform": [
+          {
+            "filter": "datum.year == Selected_year"
+          },
+          {"filter": "datum.district == 'Putrajaya'"},
+          {
+            "lookup": "district",
+            "from": {
+              "data": {
+                "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+                "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+              },
+              "key": "properties.shapeName"
+            },
+            "as": "geo"
+          }
+        ],
+        "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+        "encoding": {
+          "shape": {"field": "geo", "type": "geojson"},
+          "color": {
+            "field": "population_density",
+            "type": "quantitative",
+            "scale": {
+              "type": "threshold",
+              "domain": [0, 200, 300, 500, 1000, 2000, 4000, 8000],
+              "scheme": "oranges"
+            },
+            "title": "Population Density (per km²)"
+          },
+          "tooltip": [
+            {"field": "district", "title": "District"},
+            {"field": "year", "title": "Year"},
+            {"field": "population", "title": "Population (by thousands)"},
+            {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"}
+          ]
+        }
+      },
+      {
+        "data": {
+          "url": "map_data/routes.geojson",
+          "format": {"type": "json", "property": "features"}
+        },
+        "params": [
+          {
+            "name": "selected_line",
+            "select": {
+              "type": "point", 
+              "fields": ["route_line"],
+              "on": "click",
+              "clear": "click"
+            },
+            "bind": "legend"
+          }
+        ],
+        "transform": [
+          {
+            "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
+            "as": "route_line"
+          },
+          {"flatten": ["geometry.coordinates"], "as": ["coord"]},
+          {"calculate": "datum.coord[0]", "as": "lon"},
+          {"calculate": "datum.coord[1]", "as": "lat"}
+        ],
+        "mark": {"type": "line", "strokeWidth": 5, "opacity": 0.7},
+        "encoding": {
+          "longitude": {"field": "lon", "type": "quantitative"},
+          "latitude": {"field": "lat", "type": "quantitative"},
+          "stroke": {
+            "field": "route_line",
+            "type": "nominal",
+            "legend": {
+              "title": "Railway Lines",
+              "orient": "none",
+              "legendX": 950,
+              "legendY": 20,
+              "fillColor": "white",
+              "strokeColor": "black",
+              "padding": 10,
+              "cornerRadius": 5
+            },
+            "scale": {
+              "domain": [
+                "Kelana Jaya Line",
+                "Ampang Line",
+                "Putrajaya Line",
+                "Kajang Line",
+                "KTM",
+                "KL Monorail"
+              ],
+              "range": [
+                "#1f78b4",
+                "#33a02c",
+                "#6a3d9a",
+                "#00bfc4",
+                "#b2df8a",
+                "#636363"
+              ]
+            }
+          },
+          "opacity": {
+            "condition": {
+              "param": "selected_line",
+              "value": 1
+            },
+            "value": 0
+          },
+          "tooltip": [
+            {"field": "route_line", "title": "Line Name"}
+          ],
+          "detail": {"field": "properties.@id"}
+        }
       }
     ],
     "config": {
       "legend": {
-          "titleFontSize": 16,
-          "labelFontSize": 14,
+          "titleLimit": 500,
+          "labelLimit": 500,
+          "titleFontSize": 13.5,
+          "labelFontSize": 12.5,
           "gradientHorizontalMaxLength": 500
       },
       "title": {

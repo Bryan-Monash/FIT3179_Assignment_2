@@ -4,21 +4,35 @@
    "width": 650,
   "height": 650,
   "autosize": {"type": "none"},
-  "padding": {"top": 60, "bottom": 60, "left": 160, "right": 160},
+  "padding": {"top": 100, "bottom": 30, "left": 160, "right": 160},
   "signals": [
-    {"name": "radius", "update": "min(width, height) / 2 - 100"},
+    {"name": "radius", "update": "min(width, height) / 2 -25"},
     {
-      "name": "selected_year",
-      "value": 2024,
-      "bind": {
-        "input": "radio",
-        "options": [2020, 2021, 2022, 2023, 2024],
-        "labels": ["2020", "2021", "2022", "2023", "2024"],
-        "name": "Select Year: "
-      }
+      "name": "chk2020",
+      "value": false,
+      "bind": {"input": "checkbox", "name": "2020 "}
+    },
+    {
+      "name": "chk2021",
+      "value": false,
+      "bind": {"input": "checkbox", "name": "2021 "}
+    },
+    {
+      "name": "chk2022",
+      "value": true,
+      "bind": {"input": "checkbox", "name": "2022 "}
+    },
+    {
+      "name": "chk2023",
+      "value": true,
+      "bind": {"input": "checkbox", "name": "2023 "}
+    },
+    {
+      "name": "chk2024",
+      "value": false,
+      "bind": {"input": "checkbox", "name": "2024 "}
     }
   ],
-
   "data": [
     {
       "name": "weather",
@@ -31,11 +45,11 @@
           "groupby": ["year"],
           "fields": ["temperature", "precipitation_total", "humidity", "wind_speed", "gust"],
           "ops": ["mean", "mean", "mean", "mean", "mean"],
-          "as": ["average_temperature", "average_precipitation", "average_humidity", "average_wind_speed", "average_gust"]
+          "as": ["Average temperature", "Average precipitation", "Average humidity", "Average wind speed", "Average gust"]
         },
         {
           "type": "fold",
-          "fields": ["average_temperature", "average_precipitation", "average_humidity", "average_wind_speed", "average_gust"],
+          "fields": ["Average temperature", "Average precipitation", "Average humidity", "Average wind speed", "Average gust"],
           "as": ["metric", "value"]
         },
         {
@@ -50,7 +64,10 @@
           "as": "normalized",
           "expr": "datum.value / datum.max_value"
         },
-        {"type": "filter", "expr": "datum.year == selected_year"}
+        {
+          "type": "filter", 
+          "expr": "(datum.year == 2020 && chk2020) || (datum.year == 2021 && chk2021) || (datum.year == 2022 && chk2022) || (datum.year == 2023 && chk2023) || (datum.year == 2024 && chk2024)"
+        }
       ]
     },
     {
@@ -79,8 +96,8 @@
     {
       "name": "color",
       "type": "ordinal",
-      "domain": {"data": "weather", "field": "year"},
-      "range": {"scheme": "category10"}
+      "domain": [2020, 2021, 2022, 2023, 2024],
+      "range": ["#1f77b4", "#ff7f0e", "#9467bd", "#17becf", "#8c564b"]
     }
   ],
 
@@ -88,7 +105,10 @@
     {
       "fill": "color",
       "title": "Year",
-      "orient": "bottom-right"
+      "orient": "top-right",
+      "offset": 200,
+      "labelFontSize": 14,
+      "titleFontSize": 16
     }
   ],
 
@@ -192,21 +212,6 @@
               "strokeWidth": {"value": 1}
             }
           }
-        },
-        {
-          "type": "text",
-          "from": {"data": "facet"},
-          "encode": {
-            "enter": {
-              "x": {"signal": "scale('radial', datum.normalized + 0.08) * cos(scale('angular', datum.metric))"},
-              "y": {"signal": "scale('radial', datum.normalized + 0.08) * sin(scale('angular', datum.metric))"},
-              "text": {"signal": "format(datum.value, '0.2f')"},
-              "align": {"value": "center"},
-              "baseline": {"value": "middle"},
-              "fill": {"value": "black"},
-              "fontSize": {"value": 14}
-            }
-          }
         }
       ]
     }
@@ -217,6 +222,9 @@
       "fontSize": 24,
       "fontWeight": "bold"
     },
-    "legend": {"titleFontSize": 16, "labelFontSize": 14}
+    "legend": {
+      "titleFontSize": 13.5, 
+      "labelFontSize": 12.5
+    }
   }
 }

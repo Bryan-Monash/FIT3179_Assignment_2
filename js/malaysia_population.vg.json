@@ -1,6 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "autosize": {"type": "fit-x", "contains": "padding"},
+  "padding": {"right": 20},
   "params": [
     {
       "name": "Selected_year",
@@ -8,193 +9,293 @@
       "bind": {
         "input": "select",
         "options": [2020, 2021, 2022, 2023, 2024],
-        "name": "Year"
+        "name": "Year: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [109.455475, 4.10932],
+      "bind": {
+        "input": "select",
+        "options": [
+          [109.455475, 4.10932],
+          [103.3587, 1.9344],
+          [100.5296, 6.0499],
+          [101.8892, 5.1151],
+          [102.2501, 2.1896],
+          [102.2548, 2.8707],
+          [102.4381, 3.9743],
+          [100.8000, 4.8073],
+          [100.2151, 6.5170],
+          [100.3285, 5.4141],
+          [116.7968, 5.4204],
+          [113.0012, 2.5574],
+          [101.5248, 3.5092],
+          [102.9896, 5.0936],
+          [101.6841, 3.1319],
+          [115.2308, 5.2831],
+          [101.6964, 2.9264]
+        ],
+        "labels": [
+          "All States",
+          "Johor",
+          "Kedah",
+          "Kelantan",
+          "Melaka",
+          "Negeri Sembilan",
+          "Pahang",
+          "Perak",
+          "Perlis",
+          "Penang",
+          "Sabah",
+          "Sarawak",
+          "Selangor",
+          "Terengganu",
+          "Kuala Lumpur",
+          "Labuan",
+          "Putrajaya"
+        ],
+        "name": "State: "
+      }
+    },
+    {
+      "name": "ZoomLevel",
+      "value": 4700,
+      "bind": {
+        "input": "range",
+        "min": 4500,
+        "max": 60000,
+        "step": 100,
+        "name": "Zoom: "
       }
     }
   ],
-  "vconcat": [
+  "title": "Malaysia Population Density by States",
+  "width": "container",
+  "height": 700,
+  "projection": {
+    "type": "equirectangular",
+    "center" : {"expr": "center_to"},
+    "scale": {"expr": "ZoomLevel"}
+  },
+  "layer": [
     {
-      "title": "Malaysia Population Density by States",
-      "width": "container",
-      "height": 700,
-      "projection": {"type": "mercator"},
-      "layer": [
+      "data": {
+        "url": "map_data/ne_10m_ocean.json",
+        "format": {"type": "topojson", "feature": "ne_10m_ocean"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#cce5ff",
+        "stroke": "none"
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/ne_10m_land.json",
+        "format": {"type": "topojson", "feature": "ne_10m_land"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "white",
+        "strokeWidth": 0.5  
+      }
+    },
+    {
+      "data": {
+        "url": "data/population_state_filtered.csv"
+      },
+      "transform": [
         {
-          "data": {
-            "url": "map_data/ne_10m_ocean.json",
-            "format": {"type": "topojson", "feature": "ne_10m_ocean"}
-          },
-          "mark": {
-            "type": "geoshape",
-            "fill": "#cce5ff",
-            "stroke": "none"
-          }
+          "filter": "datum.year == Selected_year"
         },
         {
-          "data": {
-            "url": "map_data/ne_10m_land.json",
-            "format": {"type": "topojson", "feature": "ne_10m_land"}
+          "lookup": "state",
+          "from": {
+            "data": {
+              "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+              "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+            },
+            "key": "properties.shapeName"
           },
-          "mark": {
-            "type": "geoshape",
-            "fill": "lightgray",
-            "stroke": "white",
-            "strokeWidth": 0.5  
-          }
+          "as": "geo"
         },
         {
-          "data": {
-            "url": "data/population_state_filtered.csv"
+          "calculate": "log(datum.population_density) + 0.1",
+          "as": "log_population_density"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+      "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
+        "color": {
+          "field": "population_density",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [0, 40, 100, 200, 400, 1000, 2000, 4000, 10000],
+            "scheme": "oranges"
           },
-          "transform": [
-            {
-              "filter": "datum.year == Selected_year"
-            },
-            {
-              "lookup": "state",
-              "from": {
-                "data": {
-                  "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
-                  "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
-                },
-                "key": "properties.shapeName"
-              },
-              "as": "geo"
-            },
-            {
-              "calculate": "log(datum.population_density) + 0.1",
-              "as": "log_population_density"
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-          "encoding": {
-            "shape": {"field": "geo", "type": "geojson"},
-            "color": {
-              "field": "log_population_density",
-              "type": "quantitative",
-              "scale": {"type": "log", "scheme": "oranges"},
-              "title": "Population Density (log scale)",
-              "legend": {
-                "orient": "bottom",
-                "offset": 10,
-                "direction": "horizontal",
-                "titleLimit": 500,
-                "labelLimit": 500
-              }
-            },
-            "tooltip": [
-              {"field": "state", "title": "State"},
-              {"field": "year", "title": "Year"},
-              {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"},
-              {"field": "log_population_density", "title": "Log Density", "format": ".2f"}
+          "title": "Population Density ",
+          "legend": {
+            "orient": "bottom-right",
+            "offset": 10,
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "year", "title": "Year"},
+          {"field": "population_density", "title": "Population Density (per km²)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/routes.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "transform": [
+        {
+          "filter": "datum.properties['name'] != 'LRT 3' || datum.properties['name'] != 'ERL'"
+        },
+        {
+          "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
+          "as": "route_line"
+        },
+        {
+          "flatten": ["geometry.coordinates"],
+          "as": ["coord"]
+        },
+        {
+          "calculate": "datum.coord[0]",
+          "as": "lon"
+        },
+        {
+          "calculate": "datum.coord[1]",
+          "as": "lat"
+        }
+      ],
+      "params": [
+        {
+          "name": "selected_line",
+          "select": {
+            "type": "point", 
+            "fields": ["route_line"],
+            "on": "click",
+            "clear": "click"
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {"type": "line", "strokeWidth": 5, "strokeOpacity": 0.7},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "stroke": {
+          "field": "route_line",
+          "type": "nominal",
+          "legend": {
+            "title": "Routes (click to filter)",
+            "orient": "top-right",
+            "offset": 15,
+            "fillColor": "white",
+            "strokeColor": "black",
+            "padding": 10,
+            "cornerRadius": 5
+          },
+          "scale": {
+            "domain": [
+              "Kelana Jaya Line",
+              "Ampang Line",
+              "Putrajaya Line",
+              "Kajang Line",
+              "KTM",
+              "KL Monorail"
+            ],
+            "range": [
+              "#1f78b4",
+              "#33a02c",
+              "#6a3d9a",
+              "#00bfc4",
+              "#b2df8a",
+              "#636363"
             ]
           }
         },
-        {
-          "data": {
-            "url": "map_data/geoBoundaries-THA-ADM1.json",
-            "format": {"type": "topojson", "feature": "THAADM1gbOpen"}
+        "opacity": {
+          "condition": {
+            "param": "selected_line",
+            "value": 1
           },
-          "mark": {
-            "type": "geoshape",
-            "fill": "lightgray",
-            "stroke": "white",
-            "strokeWidth": 0.5  
-          }
+          "value": 0
         },
-        {
-          "data": {
-            "url": "map_data/Singapore_ADM1.json",
-            "format": {"type": "topojson", "feature": "SGPADM1gbOpen"}
-          },
-          "mark": {
-            "type": "geoshape",
-            "fill": "lightgray",
-            "stroke": "white",
-            "strokeWidth": 0.5  
-          }
-        },
-        {
-          "data": {
-            "url": "map_data/ne_110m_graticules_1.json",
-            "format": {"type": "topojson", "feature": "ne_110m_graticules_1"}
-          },
-          "mark": {
-            "type": "geoshape",
-            "fill": "none",
-            "stroke": "lightgray",
-            "strokeWidth": 0.5  
-          }
-        },
-        {
-          "data": {
-            "url": "map_data/routes.geojson",
-            "format": {"type": "json", "property": "features"}
-          },
-          "transform": [
-            {
-              "filter": "datum.properties['name'] != 'LRT 3' && datum.properties['name'] != 'ERL'"
-            },
-            {
-              "calculate": "datum.properties['name:en'] ? datum.properties['name:en'] : datum.properties.name",
-              "as": "line_name"
-            },
-            {
-              "calculate": "test(/Ampang/i, datum.line_name) || test(/Sri Petaling/i, datum.line_name) ? 'LRT Ampang/Sri Petaling Line' : test(/Kelana Jaya/i, datum.line_name) ? 'LRT Kelana Jaya Line' : test(/MRT.*Putrajaya/i, datum.line_name) ? 'MRT Putrajaya Line' : test(/MRT.*Kajang/i, datum.line_name) ? 'MRT Kajang Line' : test(/KTM/i, datum.line_name) || test(/ETS/i, datum.line_name) ? 'KTM' : test(/Monorail/i, datum.line_name) ? 'KL Monorail' : 'Other Railway'",
-              "as": "route_line"
-            },
-            {
-              "flatten": ["geometry.coordinates"],
-              "as": ["coord"]
-            },
-            {
-              "calculate": "datum.coord[0]",
-              "as": "lon"
-            },
-            {
-              "calculate": "datum.coord[1]",
-              "as": "lat"
-            }
-          ],
-          "mark": {"type": "line", "strokeWidth": 2, "opacity": 1.0},
-          "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "stroke": {
-              "field": "route_line",
-              "type": "nominal",
-              "legend": {
-                "title": "Railway Lines",
-                "orient": "top-right",
-                "offset": -100
-              },
-              "scale": {
-                "domain": [
-                  "Kelana Jaya Line",
-                  "Ampang Line",
-                  "Putrajaya Line",
-                  "Kajang Line",
-                  "KTM",
-                  "KL Monorail"
-                ],
-                "range": [
-                  "#1f78b4",
-                  "#33a02c",
-                  "#6a3d9a",
-                  "#00bfc4",
-                  "#b2df8a",
-                  "#636363"
-                ]
-              }
-            },
-            "tooltip": [
-              {"field": "line_name", "title": "Line Name"},
-              {"field": "route_line", "title": "Line Type"}
-            ],
-            "detail": {"field": "properties.@id"}
-          }
+        "tooltip": [
+          {"field": "route_line", "title": "Line Name"}
+        ],
+        "detail": {"field": "properties.@id"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"lon": 101.6869, "lat": 3.1340}]
+      },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.25,
+        "stroke": "black",
+        "strokeWidth": 3,
+        "size": {
+          "expr": "ZoomLevel/2"
         }
-      ]
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      }
+    },
+    {
+      "data": {
+        "values": [{"lon": 101.6869, "lat": 3.1340, "label": "KL Sentral — Core Rail Hub"}]
+      },
+      "transform": [
+        {
+          "calculate": "ZoomLevel / 1000", 
+          "as": "dx_val"
+        },
+        {
+          "calculate": "-ZoomLevel / 2500", 
+          "as": "dy_val"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "black",
+        "cornerRadius": 4,
+        "dx": {"expr": "ZoomLevel / 700"},
+        "dy": {"expr": "-ZoomLevel / 1400"}
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/ne_110m_graticules_5.json",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_5"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "none",
+        "stroke": "darkgray",
+        "strokeWidth": 0.5
+      } 
     }
   ],
   "config": {
@@ -204,9 +305,11 @@
       "fontWeight": "bold"
     },
     "legend": {
-        "titleFontSize": 16,
-        "labelFontSize": 14,
-        "gradientHorizontalMaxLength": 500
+      "titleFontSize": 13.5,
+      "labelFontSize": 12.5,
+      "labelLimit": 900, 
+      "titleLimit": 900,
+      "symbolLimit": 900
     }
   }
 }

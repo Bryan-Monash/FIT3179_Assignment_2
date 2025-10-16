@@ -13,67 +13,206 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="style.css" media="all">
 </head>
-<body>
-  <h1 class="page-title">Ridership in Malaysia</h1>
 
+<header class="page-header">
+  <h1>Ridership in Malaysia</h1>
+  <p class="subtitle">A Data-Driven Exploration of Public Transport, Population, and Climate Trends (2020–2024)</p>
+</header>
+<nav class="top-nav">
+  <ul>
+    <li><a href="#malaysia">Malaysia Population</a></li>
+    <li><a href="#ridership">Public Transport Ridership</a></li>
+    <li><a href="#fuelprice">Fuel Prices Trends</a></li>
+    <li><a href="#temperature">Temperature Trends</a></li>
+    <li><a href="#selangor">Selangor Population</a></li>
+    <li><a href="#radar">Selangor Weather Comparison</a></li>
+  </ul>
+</nav>
+<body>
   <!-- Malaysia Visualization -->
-  <div class="viz-section">
-    <div id="Msia_vis" class="viz-container"></div>
-    <div class="text-box">
-      <h2>Malaysia Overview</h2>
-      <p>
-        The railway system in Malaysia is extensive, covering major urban areas and connecting various states. 
-        Even so, new routes are undergoing construction to improve connectivity and reduce travel time.
-      </p>
+  <div id="malaysia" class="container">
+    <div class="viz-section-column">
+      <div id="Msia_vis" class="viz-container"></div>
+    </div>
+    <div class="viz-section-row">
+      <div id="station_vis" class="viz-container-2"></div>
+      <div class="text-box">
+          <h2>
+            Crowded and Calm:
+            <br> Population Concentration Across Malaysia
+          </h2>
+          <hr class="separator">
+          <h3>
+            The population density in Malaysia is highest in the urban areas, particularly in <b>Kuala Lumpur</b>, <b>Selangor</b>, and <b>Penang</b>. 
+            The city center, <b>Kuala Lumpur</b> has the highest population density, with over <u>8,000 people per square kilometer</u>.
+            Even so, the public transport system is not just limited to these areas, as the <b style="color: #b2df8a;">KTM</b> line connects to <u>other states</u>.  
+            which connects the northern and southern regions of Peninsular Malaysia where most states have a KTM (train) station. 
+            Whereas within <b>Kuala Lumpur</b> (central), the railway system is <u>more concentrated</u>, with all types of stations of <b style="color: #1f78b4;">Kelana Jaya Line</b>, 
+            <b style="color: #00bfc4;">Kajang Line</b>, <b style="color: #33a02c;">Ampang Line</b>, <b style="color: #e31a1c;">Sri Petaling Line</b>, <b style="color: #6a3d9a;">Putrajaya Line</b> and <b style="color: #636363;">KL Monorail</b>.
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Ridership Visualization -->
-  <div class="viz-section">
-    <div id="ridership_vis" class="viz-container"></div>
+  <div id="ridership" class="viz-section-row">
+    <div id="ridership_vis" class="viz-container-2"></div>
     <div class="text-box">
-      <h2>Public Transport Ridership</h2>
-      <p>
-        Back in April 2020, the ridership dropped significatnly due to the COVID-19 pandemic and the implementation of Movement Control Orders (MCOs).
+      <h2>Public Transport Ridership:
+        <br> Which Routes are the Most Popular?
+      </h2>
+      <hr class="separator">
+      <h3>
+        Back in <b>April 2020</b>, the ridership <b>dropped significantly</b> due to the COVID-19 pandemic and the implementation of Movement Control Orders (MCOs).
         As the situation improved and restrictions were lifted, ridership gradually increased, reaching pre-pandemic levels by early 2023.
-      </p>
+        Two of the most popular routes are the <b style="color: #1f78b4;">Kelana Jaya Line</b> and the <b style="color: #00bfc4;">Kajang Line</b>.
+        Across <b>2023 to 2024</b>, the two lines occupied <u>over 50%</u> of the total ridership, indicating their importance in the public transport network.
+      </h3>
+    </div>
+  </div>
+
+  <!-- Fuel Price Visualization -->
+  <div id="fuelprice" class="viz-section-row">
+    <div id="fuelprice_vis" class="viz-container-2"></div>
+    <div class="text-box">
+      <h2>
+        When Prices Rise, So Do Passengers: 
+        <br>How Fuel Costs Shape Ridership
+      </h2>
+      <hr class="separator">
+      <h3>
+        The fuel price in Malaysia has seen fluctuations over the years, influenced by global oil prices and domestic policies.
+        Notably, there was a <b>significant increase</b> in <b style="color: green;">RON97</b> prices around <u>June 2022</u>, 
+        which may have increase the public transport ridership as people sought more affordable alternatives to driving. However,
+        the <u>significant drop</u> in fuel price after the increase, we see the <b>ridership</b> also <u>dropped slightly</u>, 
+        indicating that fuel prices are proportionally related to public transport usage.
+    </div>
+  </div>
+
+  <!-- Temperature Heatmap Visualization -->
+  <div id="temperature" class="viz-section-row">
+    <div id="temperature_vis" class="viz-container-2"></div>
+    <div class="text-box">
+      <h2>“Hot Days, Empty or Full Trains? 
+        <br>Exploring the Link Between Heat and Ridership”
+      </h2>
+      <hr class="separator">
+      <h3>
+        The temperature heatmap provides insights into the average temperatures across different states in Malaysia.
+        It highlights the variations in temperature throughout the year, helping to identify trends and patterns.
+        During <b>2024</b>, the average temperature looks to be the <b>highest</b> compared to previous years,
+        which may be one of the factors why <u>ridership has increased</u>, as people tend to avoid outdoor activities during hotter periods,
+        especially in <b>Selangor</b> and <b>Kuala Lumpur</b> where all the railways are concentrated.
+      </h3>
     </div>
   </div>
 
   <!-- Selangor Visualization -->
-  <div class="viz-section">
-    <div id="Selangor_vis" class="viz-container"></div>
+  <div id="selangor" class="viz-section-row">
+    <div id="Selangor_vis" class="viz-container-2"></div>
     <div class="text-box">
-      <h2>Selangor, Kuala Lumpur & Putrajaya Details</h2>
-      <p>
-        Focusing on Selangor, Kuala Lumpur, and Putrajaya, there are where the railways are most established due to high population,
-        as well as working opportunities. The network centralizes around these states and expands northwards (Thailand) and southwards (Singapore) with KTM.
-      </p>
+      <h2>Where the Nation Lives: 
+        <br>Density Trends in Malaysia’s Central Cities
+      </h2>
+      <hr class="separator">
+      <h3>
+        <b>Selangor</b> and <b>Putrajaya</b> are close neighbours to <b>Kuala Lumpur</b>, the capital city of Malaysia. 
+        The <u>population density</u> of districts in Selangor close to Kuala Lumpur, such as <b>Petaling</b>, <b>Gombak</b>, <b>Ulu Langat</b> and <b>Klang</b>, 
+        are significantly higher than other districts in Selangor. Also, all the railways goes through <b> Kuala Lumpur</b> and connects to these districts. 
+        The high volume routes <b style="color: #1f78b4;">Kelana Jaya Line</b>, <b style="color: #00bfc4;">Kajang Line</b>, <b style="color: #33a02c;">Ampang Line</b> 
+        and <b style="color: #6a3d9a;">Putrajaya Line</b> all serve these high-density areas, indicating a strong correlation between population density and public transport usage.
+      </h3>
     </div>
   </div>
 
   <!-- Radar Visualization -->
-  <div class="viz-section">
-    <div id="radar_vis" class="viz-container"></div>
+  <div id="radar" class="viz-section-row">
+    <div id="radar_vis" class="viz-container-2"></div>
     <div class="text-box">
-      <h2>Performance Radar</h2>
-      <p>
+      <h2>
+        “Rain or Shine: 
+        <br>How Selangor’s Weather Shapes Public Transport Use”
+      </h2>
+      <hr class="separator">
+      <h3>
         The radar chart compares the weather between 2020-2024 to visualize the changes in temperature, humidity, wind speed, gust and rainfall.
-        It shows that these factors do affect the ridership, especially during extreme weather conditions where people tend to avoid outdoor activities.
-      </p>
+        Comparing <b style="color: #9467bd;">2022</b> to <b style="color: #17becf;">2023</b>, we can see an <u>increase</u> in <b>temperature</b>, <b>rainfall</b>, <b>wind speed</b>, and <b>gust</b>,
+        Even though there is <u>decrease</u> in <b>humidity</b>, the overall weather conditions seem to be more extreme compared to previous years.
+        As a result, the public transport <b>ridership</b> in <b style="color: #17becf;">2023</b> has <u>increased significantly</u> compared to <b style="color: #9467bd;">2022</b>, indicating that people may prefer public transport during extreme weather conditions.
+      </h3>
     </div>
   </div>
+
+  <footer>
+    <p>© 2025 Bryan Lau | FIT3179, Monash University</p>
+    <p>
+      <strong>Sources obtained from:</strong>
+      <br>
+      <br>
+      <b>1. Population</b>
+      <br>
+      <a href="https://data.gov.my/data-catalogue/population_state">Population Table: States</a>
+      <br>
+      <a href="https://data.gov.my/data-catalogue/population_district">Population Table: Administrative Districts</a>
+      <br>
+      <br>
+      <b>2. Routes</b>
+      <br>
+      <a href="https://openstreetmap.com">OpenStreetMap</a> <p>(Extracted with <a href="https://overpass-turbo.eu/">overpass-turbo</a>)</p>
+      <br>
+      <b>3. Ridership</b>
+      <br>
+      <a href="https://data.gov.my/data-catalogue/ridership_headline">Daily Public Transport Ridership</a>
+      <br>
+      <br>
+      <b>4. Fuel Prices</b>
+      <br>
+      <a href="https://data.gov.my/data-catalogue/fuelprice">Price of Petroleum & Diesel</a>
+      <br>
+      <br>
+      <b>5. Weather Data</b>
+      <br>
+      <a href="https://www.kaggle.com/datasets/shahmirvarqha/weather-data-malaysia?select=full_weather.csv">Malaysia's Weather Data (1996-Present)</a>
+    </p>
+  </footer>
 
   <script>
     const msia_spec = "js/malaysia_population.vg.json";
     const selangor_spec = "js/selangor_population.vg.json";
     const ridership_spec = "js/routes_ridership.vg.json";
     const radar_spec = "js/radar_chart.vg.json";
+    const fuelprice_spec = "js/fuel_price.vg.json";
+    const temperature_spec = "js/temperature_heatmap.vg.json";
+    const station_spec = "js/stations.vg.json";
 
     vegaEmbed("#Msia_vis", msia_spec).catch(console.error);
     vegaEmbed("#Selangor_vis", selangor_spec).catch(console.error);
     vegaEmbed("#ridership_vis", ridership_spec).catch(console.error);
     vegaEmbed("#radar_vis", radar_spec).catch(console.error);
+    vegaEmbed("#fuelprice_vis", fuelprice_spec).catch(console.error);
+    vegaEmbed("#temperature_vis", temperature_spec).catch(console.error);
+    vegaEmbed("#station_vis", station_spec).catch(console.error);
+
+    const sections = document.querySelectorAll("#malaysia, #ridership, #fuelprice, #temperature, #selangor, #radar");
+    const navLinks = document.querySelectorAll(".top-nav a");
+
+    const observerOptions = {
+      threshold: 0.4, // Trigger when 40% of section is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute("id");
+        const link = document.querySelector(`.top-nav a[href="#${id}"]`);
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove("active"));
+          if (link) link.classList.add("active");
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
   </script>
 </body>
 </html>

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "title": "Malaysia Temperature Heatmap",
+  "width": "container",
+  "height": 400,
+  "padding": {"right": 20},
+  "data": {"url": "data/weather_filtered_temperature.csv"},
+  "transform": [
+    {
+      "calculate": "toDate(datum.date)",
+      "as": "date"
+    }
+  ],
+  "mark": "rect",
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "timeUnit": "yearmonth",
+      "title": "Month",
+      "axis":  {
+        "labelFontSize": 12
+      }
+    },
+    "y": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "axis":  {
+        "labelFontSize": 12
+      }
+    },
+    "color": {
+      "aggregate": "mean",
+      "field": "temperature",
+      "type": "quantitative",
+      "scale": {
+        "type":  "threshold",
+        "domain": [24, 26, 28, 30, 32, 34],
+        "scheme": "yelloworangebrown"
+      },
+      "title": "Temperature (°C)",
+      "legend": {
+        "title": "Temperature (°C)",
+        "orient": "none",
+        "legendX": 800,
+        "legendY": 430,
+        "direction": "horizontal"
+      }
+    },
+    "tooltip": [
+      {"field": "state", "title": "State"},
+      {
+        "field": "date",
+        "title": "Month",
+        "type": "temporal",
+        "timeUnit": "yearmonth",
+        "format": "%B %Y"
+      },
+      {
+        "aggregate": "mean",
+        "field": "temperature",
+        "title": "Average Temperature (°C)",
+        "type": "quantitative",
+        "format": ".2f"
+      }
+    ]
+  },
+  "config": {
+    "title": {
+      "font": "Times New Roman",
+      "fontSize": 24,
+      "fontWeight": "bold"
+    },
+    "legend": {"titleFontSize": 16, "labelFontSize": 14}
+  }
+}

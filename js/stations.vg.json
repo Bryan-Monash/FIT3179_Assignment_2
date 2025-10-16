@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Number of Rail Stations by State in Malaysia",
+  "width": "container",
+  "height": 700,
+  "projection": {
+    "type": "equirectangular",
+    "center": [109.455475, 4.10932],
+    "scale": 2500
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "map_data/ne_10m_land.json",
+        "format": {"type": "topojson", "feature": "ne_10m_land"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "white",
+        "strokeWidth": 0.5  
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/ne_10m_ocean.json",
+        "format": {"type": "topojson", "feature": "ne_10m_ocean"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#cce5ff",
+        "stroke": "white"
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/geoBoundaries-MYS-ADM1.topojson",
+        "format": {"type": "topojson", "feature": "MYSADM1gbOpen"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "black"}
+    },
+    {
+      "data": {
+        "url": "data/station_count_by_state.csv"
+      },
+      "transform": [
+        {
+          "calculate": "toNumber(datum.subway) + toNumber(datum.monorail) + toNumber(datum.light_rail) + toNumber(datum.train)",
+          "as": "total_stations"
+        },
+        {
+          "filter": "datum.total_stations > 0"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.7,
+        "stroke": "black",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {
+          "field": "total_stations",
+          "type": "quantitative",
+          "scale": {"range": [100, 3000]},
+          "legend": {
+            "title": "Total Stations",
+            "orient": "none",
+            "legendX": 1000,
+            "legendY": 10,
+            "fillColor": "white",
+            "strokeColor": "black",
+            "padding": 10,
+            "cornerRadius": 5
+          }
+        },
+        "color": {
+          "field": "total_stations",
+          "type": "quantitative",
+          "scale": {"scheme": "oranges"}
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "subway", "title": "Subway"},
+          {"field": "monorail", "title": "Monorail"},
+          {"field": "light_rail", "title": "Light Rail"},
+          {"field": "train", "title": "Train"},
+          {"field": "total_stations", "title": "Total Stations"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "map_data/ne_110m_graticules_5.json",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_5"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "none",
+        "stroke": "darkgray",
+        "strokeWidth": 0.5
+      } 
+    }
+  ],
+  "config": {
+    "title": {"font": "Times New Roman", "fontSize": 22, "fontWeight": "bold"},
+    "legend": {"titleFontSize": 13, "labelFontSize": 12}
+  }
+}

@@ -26,11 +26,25 @@
   ],
   "vconcat": [
     {
-      "title": "Yearly Ridership (Brush to Select Year Range)",
+      "title": "Yearly Ridership by Route",
       "width": "container",
-      "height": 100,
+      "height": 200,
       "data": {"url": "data/ridership_filtered.csv"},
       "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "font": "Arial",
+            "fontSize": 12,
+            "fontWeight": "normal",
+            "fill": "#555"
+          },
+          "encoding": {
+            "y": {"value": -20},
+            "text": {"value": "💡 Drag horizontally to brush and explore routes below"}
+          }
+        },
         {
           "mark": "line",
           "params": [
@@ -64,7 +78,7 @@
               "field": "route", 
               "type": "nominal",
               "legend": {
-                "title": "Route",
+                "title": "Routes",
                 "orient": "right"
               },
               "scale": {
@@ -86,7 +100,7 @@
     {
       "title": "Ridership by Route",
       "width": "container",
-      "height":200,
+      "height": 200,
       "data": {"url": "data/ridership_filtered.csv"},
       "transform": [
         {"filter": {"param": "time_brush"}},
@@ -123,7 +137,7 @@
           "field": "route", 
           "type": "nominal",
           "legend": {
-            "title": "Route",
+            "title": "Routes",
             "orient": "right"
           },
           "scale": {
@@ -140,113 +154,7 @@
         },
         "tooltip": [
           {"field": "route", "title": "Route"},
-          {"field": "total_ridership", "title": "Ridership"}
-        ]
-      }
-    },
-    {
-      "title": "Fuel Price in Malaysia",
-      "width": "container",
-      "data": {"url": "data/fuelprice_filtered.csv"},
-      "transform": [
-        {"filter": {"param": "time_brush"}},
-        {
-          "fold": ["ron95", "ron97"],
-          "as": ["fuel_type", "price"]
-        }
-      ],
-      "mark": "line",
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "title": "Year",
-          "axis":  {
-            "labelExpr": "timeFormat(datum.value, '%B %Y')",
-            "labelFontSize": 12,
-            "grid": false
-          }
-        },
-        "y": {
-          "field": "price",
-          "type": "quantitative",
-          "title": "Fuel Price (MYR)",
-          "axis":  {
-            "labelFontSize": 12
-          }
-        },
-        "color": {
-          "field": "fuel_type",
-          "type": "nominal",
-          "title": "Fuel Type",
-          "scale": {
-            "domain": ["ron95", "ron97"],
-            "range": ["#ff7f0e", "#2ca02c"]
-          },
-          "legend": {
-            "title": "Fuel Type",
-            "orient": "right"
-          }
-        }
-      }
-    },  
-    {
-      "title": "Malaysia Temperature Heatmap",
-      "width": "container",
-      "data": {"url": "data/weather_filtered_temperature.csv"},
-      "transform": [
-        {
-          "calculate": "toDate(datum.date)",
-          "as": "date"
-        },
-        {"filter": {"param": "time_brush"}}
-      ],
-      "mark": "rect",
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "timeUnit": "yearmonth",
-          "title": "Month",
-          "axis":  {
-            "labelFontSize": 12
-          }
-        },
-        "y": {
-          "field": "state",
-          "type": "nominal",
-          "title": "State",
-          "axis":  {
-            "labelFontSize": 12
-          }
-        },
-        "color": {
-          "aggregate": "mean",
-          "field": "temperature",
-          "type": "quantitative",
-          "scale": {"scheme": "yelloworangebrown"},
-          "title": "Temperature (°C)",
-          "legend": {
-            "title": "Temperature (°C)",
-            "orient": "right"
-          }
-        },
-        "tooltip": [
-          {"field": "state", "title": "State"},
-          {
-            "field": "date",
-            "title": "Month",
-            "type": "temporal",
-            "timeUnit": "yearmonth",
-            "format": "%B %Y"
-          },
-          {
-            "aggregate": "mean",
-            "field": "temperature",
-            "title": "Average Temperature (°C)",
-            "type": "quantitative",
-            "format": ".2f"
-          }
+          {"field": "total_ridership", "title": "Ridership", "format": ",d"}
         ]
       }
     }
@@ -257,7 +165,10 @@
       "fontSize": 24,
       "fontWeight": "bold"
     },
-    "legend": {"titleFontSize": 16, "labelFontSize": 14},
-    "concat": {"spacing": 100}
+    "legend": {
+      "titleFontSize": 13.5, 
+      "labelFontSize": 12.5
+    },
+    "concat": {"spacing": 50}
   }
 }

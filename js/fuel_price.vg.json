@@ -1,0 +1,140 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "title": "Fuel Price in Malaysia",
+  "width": "container",
+  "height": 400,
+  "data": {"url": "data/fuelprice_filtered.csv"},
+  "transform": [
+    {"fold": ["ron95", "ron97"], "as": ["fuel_type", "price"]}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "line"},
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": "Year Month",
+          "axis": {
+            "labelExpr": "timeFormat(datum.value, '%B %Y')",
+            "labelFontSize": 12,
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "title": "Fuel Price (MYR)",
+          "axis": {"labelFontSize": 12}
+        },
+        "color": {
+          "field": "fuel_type",
+          "type": "nominal",
+          "title": "Fuel Type",
+          "scale": {
+            "domain": ["ron95", "ron97"],
+            "range": ["brown", "green"]
+          },
+          "legend": {"title": "Fuel Type", "orient": "right"}
+        },
+        "tooltip": [
+          {"field": "fuel_type", "title": "Fuel Type"},
+          {
+            "field": "date",
+            "title": "Year Month",
+            "type": "temporal",
+            "timeUnit": "yearmonth",
+            "format": "%B %Y"
+          },
+          {
+            "field": "price",
+            "title": "Price (MYR)",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.fuel_type == 'ron97'"},
+        {
+          "window": [
+            {"op": "rank", "field": "price", "as": "ranking"}
+          ],
+          "sort": [
+            {"field": "price", "order": "descending"},
+            {"field": "date", "order": "ascending"}
+          ]
+        },
+        {"filter": "datum.ranking == 1"}
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "green",
+        "stroke": "green",
+        "strokeWidth": 2,
+        "fillOpacity": 0.5,
+        "size": 80
+      },
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "price", "type": "quantitative"},
+        "tooltip": [
+          {"field": "fuel_type", "title": "Fuel Type"},
+          {
+            "field": "date",
+            "title": "Year Month",
+            "type": "temporal",
+            "timeUnit": "yearmonth",
+            "format": "%B %Y"
+          },
+          {
+            "field": "price",
+            "title": "Price (MYR)",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.fuel_type == 'ron97'"},
+        {
+          "window": [
+            {"op": "rank", "field": "price", "as": "ranking"}
+          ],
+          "sort": [
+            {"field": "price", "order": "descending"},
+            {"field": "date", "order": "ascending"}
+          ]
+        },
+        {"filter": "datum.ranking == 1"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 20,
+        "dy": 5,
+        "fontSize": 13,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "price", "type": "quantitative"},
+        "text": {"value": "Highest price (4.84 MYR) in June 2022"}
+      }
+    }
+  ],
+  "config": {
+    "title": {
+      "font": "Times New Roman",
+      "fontSize": 24,
+      "fontWeight": "bold"
+    },
+    "legend": {"titleFontSize": 16, "labelFontSize": 14}
+  }
+}
