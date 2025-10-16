@@ -61,7 +61,7 @@
       "value": 4700,
       "bind": {
         "input": "range",
-        "min": 4500,
+        "min": 3000,
         "max": 60000,
         "step": 100,
         "name": "Zoom: "

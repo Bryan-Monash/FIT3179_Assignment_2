@@ -81,7 +81,7 @@ h3 {
   min-height: 50vh;
   display: grid;
   padding: 2em 8em 3em 8em;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 60% 40%;
   grid-template-rows: 1fr;
   gap: 4rem;
   margin-bottom: 4em;
