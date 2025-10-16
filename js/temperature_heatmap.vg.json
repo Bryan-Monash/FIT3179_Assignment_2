@@ -41,7 +41,9 @@
       "title": "Temperature (°C)",
       "legend": {
         "title": "Temperature (°C)",
-        "orient": "bottom",
+        "orient": "none",
+        "legendX": {"expr": "width - 200"},
+        "legendY": {"expr": "height + 30"},
         "direction": "horizontal"
       }
     },
