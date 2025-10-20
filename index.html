@@ -186,13 +186,15 @@
     const temperature_spec = "js/temperature_heatmap.vg.json";
     const station_spec = "js/stations.vg.json";
 
-    vegaEmbed("#Msia_vis", msia_spec).catch(console.error);
-    vegaEmbed("#Selangor_vis", selangor_spec).catch(console.error);
-    vegaEmbed("#ridership_vis", ridership_spec).catch(console.error);
-    vegaEmbed("#radar_vis", radar_spec).catch(console.error);
-    vegaEmbed("#fuelprice_vis", fuelprice_spec).catch(console.error);
-    vegaEmbed("#temperature_vis", temperature_spec).catch(console.error);
-    vegaEmbed("#station_vis", station_spec).catch(console.error);
+    const options = {"actions": false};
+
+    vegaEmbed("#Msia_vis", msia_spec, options).catch(console.error);
+    vegaEmbed("#Selangor_vis", selangor_spec, options).catch(console.error);
+    vegaEmbed("#ridership_vis", ridership_spec, options).catch(console.error);
+    vegaEmbed("#radar_vis", radar_spec, options).catch(console.error);
+    vegaEmbed("#fuelprice_vis", fuelprice_spec, options).catch(console.error);
+    vegaEmbed("#temperature_vis", temperature_spec, options).catch(console.error);
+    vegaEmbed("#station_vis", station_spec, options).catch(console.error);
 
     const sections = document.querySelectorAll("#malaysia, #ridership, #fuelprice, #temperature, #selangor, #radar");
     const navLinks = document.querySelectorAll(".top-nav a");
