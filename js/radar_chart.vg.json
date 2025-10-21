@@ -155,7 +155,12 @@
               "size": {"value": 80},
               "fill": {"scale": "color", "field": "year"},
               "stroke": {"value": "white"},
-              "strokeWidth": {"value": 1.5}
+              "strokeWidth": {"value": 1.5}              
+            },
+            "update": {
+              "tooltip": {
+                "signal": "{'Year': datum.year, 'Metric': datum.metric, 'Value': format(datum.value, '.2f')}"
+              }
             }
           }
         },
